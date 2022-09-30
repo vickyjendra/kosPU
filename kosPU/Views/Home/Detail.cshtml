@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+}
+
+
+
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    .mySlides {
+        display: none;
+    }
+</style>
+<h2 class="w3-center">Images</h2>
+
+<div class="w3-content w3-display-container">
+    <center>
+        <img class="mySlides" src="~/additional-file/images/bg.jpg" width="500">
+        <img class="mySlides" src="~/additional-file/images/barbieLogo.png" width="500">
+        <img class="mySlides" src="~/additional-file/images/barbie_logo_3.png" width="500">
+        <img class="mySlides" src="~/additional-file/images/FRM09_01.jpg" width="500">
+    </center>
+    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+</div>
+
+<script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        if (n > x.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = x.length }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[slideIndex - 1].style.display = "block";
+    }
+</script>
+<hr />
+<div class="row">
+    <div class="col-sm-8">
+        <CENTER>Kosan Haji Gandi</CENTER>
+    </div>
+    <div class="col-sm-4">
+
+        <div class="card" style="width: 18rem;">
+            
+            <div class="card-body">
+                <center>
+                    <h5 class="card-title">Kosan Gandi</h5>
+                    <p class="card-text">RP.1.300.000/Bulan.</p>
+                   
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
