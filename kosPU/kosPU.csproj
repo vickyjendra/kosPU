@@ -126,15 +126,30 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="additional-file\css\css.css" />
     <Content Include="additional-file\datatabe\jquery.dataTables.min.css" />
     <Content Include="additional-file\datatabe\jquery.dataTables.min.js" />
     <Content Include="additional-file\datatabe\scroll.css" />
+    <Content Include="additional-file\images\air-conditioner.png" />
     <Content Include="additional-file\images\barbieLogo.png" />
     <Content Include="additional-file\images\barbie_logo_1.png" />
     <Content Include="additional-file\images\barbie_logo_3.png" />
+    <Content Include="additional-file\images\bathtub.png" />
     <Content Include="additional-file\images\bg.jpg" />
+    <Content Include="additional-file\images\dining.png" />
+    <Content Include="additional-file\images\double-bed.png" />
+    <Content Include="additional-file\images\free.png" />
     <Content Include="additional-file\images\FRM09_01.jpg" />
+    <Content Include="additional-file\images\location.png" />
     <Content Include="additional-file\images\mattel.png" />
+    <Content Include="additional-file\images\policeman.png" />
+    <Content Include="additional-file\images\refrigerator.png" />
+    <Content Include="additional-file\images\size.png" />
+    <Content Include="additional-file\images\table.png" />
+    <Content Include="additional-file\images\tv.png" />
+    <Content Include="additional-file\images\wardrobe.png" />
+    <Content Include="additional-file\images\washing-machine.png" />
+    <Content Include="additional-file\images\wifi-router.png" />
     <Content Include="additional-file\js\inex.js" />
     <Content Include="additional-file\js\jquery-3.3.1.slim.min.js" />
     <Content Include="additional-file\stepper\bootstrap.bundle.min.js" />
@@ -2044,6 +2059,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Home\Detail.cshtml" />
+    <Content Include="Views\Account\lamanawal.cshtml" />
+    <Content Include="Views\Account\LoginOwner.cshtml" />
+    <Content Include="Views\Account\registerowner.cshtml" />
+    <Content Include="Views\Account\registeruser.cshtml" />
+    <Content Include="Views\Home\dashboardowner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

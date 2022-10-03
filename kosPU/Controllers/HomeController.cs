@@ -17,5 +17,9 @@ namespace kosPU.Controllers
         {
             return View();
         }
+        public ActionResult dashboardowner()
+        {
+            return View();
+        }
     }
 }

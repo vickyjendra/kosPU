@@ -5,7 +5,6 @@
 
 
 
-
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
     .mySlides {
@@ -14,62 +13,167 @@
 </style>
 <h2 class="w3-center">Images</h2>
 
-<div class="w3-content w3-display-container">
-    <center>
-        <img class="mySlides" src="~/additional-file/images/bg.jpg" width="500">
-        <img class="mySlides" src="~/additional-file/images/barbieLogo.png" width="500">
-        <img class="mySlides" src="~/additional-file/images/barbie_logo_3.png" width="500">
-        <img class="mySlides" src="~/additional-file/images/FRM09_01.jpg" width="500">
-    </center>
-    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
-    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
-</div>
-
-<script>
-    var slideIndex = 1;
-    showDivs(slideIndex);
-
-    function plusDivs(n) {
-        showDivs(slideIndex += n);
-    }
-
-    function showDivs(n) {
-        var i;
-        var x = document.getElementsByClassName("mySlides");
-        if (n > x.length) { slideIndex = 1 }
-        if (n < 1) { slideIndex = x.length }
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-        }
-        x[slideIndex - 1].style.display = "block";
-    }
-</script>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <center>
+                    <img class="d-block w-100" src="~/additional-file/images/bg.jpg" alt="First slide">
+                </center>
+            </div>
+            <div class="carousel-item">
+                <center>
+                    <img class="d-block w-100" src="~/additional-file/images/bg.jpg" alt="Second slide">
+                </center>
+            </div>
+            @*<div class="carousel-item">
+                    <img class="d-block w-100" src="~/additional-file/images/mattel.png" alt="Third slide" width="500">
+                </div>*@
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
 <hr />
 <div class="row">
     <div class="col-sm-8">
         <h1>
             <center>
-                <p  class="font-weight-bold">Kosan Gandi</p>
+                <p class="font-weight-bold">Kosan Gandi</p>
             </center>
         </h1>
+        <hr />
+        <br />
         <div class="row">
-            <div class="col-sm-2">Mix</div>
-            <div class="col-sm-10">100m from President University</div>
+            <div class="col-sm">Mix</div>
+            <div class="col-sm">
+                <img src="~/additional-file/images/location.png" width="30" />
+                100m from President University
+            </div>
+        </div>
+        <br />
+
+        <div class="row">
+            <div class="col-sm">
+                Tersisa 1 Kamar
+            </div>
+            <div class="col-sm">
+
+            </div>
+            <div class="col-sm">
+
+            </div>
+            <div class="col-sm">
+                <input type="submit" class="form-group btn btn-primary" value="Save" />
+            </div>
+        </div>
+
+
+        <hr />
+        <h2>
+            <p class="font-weight-bold">
+                Yang Kamu Dapatkan
+            </p>
+        </h2>
+        <div class="row">
+            <div class="col">
+                <img src="~/additional-file/images/free.png" width="30" />
+                Free Biaya Admin & Kebersihan
+            </div>
+
+
+        </div>
+        <br />
+
+
+        <div class="row">
+            <div class="col">
+                <img src="~/additional-file/images/policeman.png" width="30" />
+                Penjaga Kosan
+            </div>
+
+
+        </div>
+        <hr />
+        <h2>
+            <p class="font-weight-bold">
+                Spesifikasi Kamar
+            </p>
+        </h2>
+        <div class="row">
+            <div class="col">
+                <img src="~/additional-file/images/size.png" width="30" />
+                3 x 5 Meter
+            </div>
         </div>
         <br />
         <div class="row">
-           
-                <div class="col-sm-3">
-                    <p>Tersisa 1 Kamar</p>
-                </div>
-           
-            <div class="col-sm-9">
-            <input type="submit" value="Save" class="form-group" />
+            <div class="col">
+                <img src="~/additional-file/images/bathtub.png" width="30" />
+                Kamar Mandi Didalam
+            </div>
+        </div>
+        <hr />
+        <h2>
+            <p class="font-weight-bold">
+                Fasilitas
+            </p>
+        </h2>
+        <div class="row">
+            <div class="col-sm">
+                <img src="~/additional-file/images/air-conditioner.png" width="30" />
+                AC
             </div>
 
+            <div class="col-sm">
+                <img src="~/additional-file/images/double-bed.png" width="30" />
+                Kasur
+            </div>
+            <div class="col-sm">
+                <img src="~/additional-file/images/wifi-router.png" width="30" />
+                WIFI
+            </div>
         </div>
-            
-        
+        <br />
+
+
+
+        <div class="row">
+            <div class="col-sm">
+                <img src="~/additional-file/images/wardrobe.png" width="30" />
+                Lemari
+            </div>
+            <div class="col">
+                <img src="~/additional-file/images/table.png" width="30" />
+                Meja Belajar
+            </div>
+            <div class="col">
+                <img src="~/additional-file/images/table.png" width="30" />
+                Kursi
+            </div>
+        </div>
+
+
+        <br />
+        <div class="row">
+            <div class="col-sm">
+                <img src="~/additional-file/images/washing-machine.png" width="30" />
+                mesin cuci
+            </div>
+            <div class="col-sm">
+                <img src="~/additional-file/images/refrigerator.png" width="30" />
+                KULKAS
+            </div>
+            <div class="col-sm">
+                <img src="~/additional-file/images/tv.png" width="30" />
+                TV
+            </div>
+        </div>
+
     </div>
     
     <div class="col-sm-4">
@@ -97,6 +201,16 @@
                     </a>
 
 
+                </center>
+            </div>
+        </div>
+        <br />
+        <div class="card" style="width: 25rem;">
+           
+            <img class="card-img-top" src="~/additional-file/images/FRM09_01.jpg"" alt="Card image cap">
+            <div class="card-body">
+                <center>
+                    <p class="card-text">Diskon</p>
                 </center>
             </div>
         </div>
