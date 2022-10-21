@@ -1,4 +1,4 @@
-﻿
+﻿@model kosPU.Models.account_ownerr
 @{
     Layout = null;
 }
@@ -53,28 +53,31 @@
                                     </div>
 
 
-
-                                    <div class="form-group">
-
-
-                                        <input type="text" class="form-control form-control-user"
-                                               id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" />
-                                        <br />
+                                    @using (Html.BeginForm("LoginOwner", "Account", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                   id="exampleInputPassword" placeholder="Password" />
+
+
+                                            <input type="text" class="form-control form-control-user"
+                                                   id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" @Html.TextBoxFor(m => m.username_owner, new { @placeholder = "UserName" })
+                                            <br />
+                                            <div class="form-group">
+                                                <input type="password" class="form-control form-control-user"
+                                                       id="exampleInputPassword" placeholder="Password" @Html.PasswordFor(m => m.password_owner, new { @placeholder = "Password" })
+                                            </div>
+
+                                            
+                                                <input type="submit" value="LOGIN" class="btn btn-primary btn-user btn-block">
+
+                                            
+                                                <div class="text-center">
+                                                    <p>Not a member? <a href="~/Account/registerowner">Register</a></p>
+                                                    <p>Kamu salah klik <a href="~/Account/lamanawal">Back</a></p>
+                                                </div>
                                         </div>
-
-                                        <a href="~/Home/Index">
-                                            <input type="submit" value="LOGIN" class="btn btn-primary btn-user btn-block">
-
-                                        </a>
-                                        <div class="text-center">
-                                            <p>Not a member? <a href="~/Account/registerowner">Register</a></p>
-
-                                        </div>
+                                    }
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>

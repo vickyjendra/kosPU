@@ -17,9 +17,12 @@ namespace kosPU.Controllers
         {
             return View();
         }
-        public ActionResult dashboardowner()
+       
+       public ActionResult Boking()
         {
             return View();
         }
+
+
     }
 }

@@ -1,0 +1,1053 @@
+﻿
+@{
+    ViewBag.Title = "DetailPenghuni";
+    Layout = "~/Views/Shared/_LayoutOwner.cshtml";
+}
+
+<center>
+    <h2>Detail Kosan Gandi</h2>
+</center>
+<link href="~/additional-file/datatabe/jquery.dataTables.min.css" rel="stylesheet" />
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Tambah Penghuni
+</button>
+<br />
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Penghuni</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Nama Penghuni
+                                    </div>
+                                    <div class="col-sm">
+                                        <input type="text" class="form-control" />
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        No.Telp
+                                    </div>
+                                    <div class="col-sm">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Jumlah Penghuni
+                                    </div>
+                                    <div class="col-sm">
+                                        <input type="number" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Kamar Nomor
+                                    </div>
+                                    <div class="col-sm">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <br />
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Start
+                                        </div>
+                                        <div class="col-sm">
+                                            <input type="date" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            End
+                                        </div>
+                                        <div class="col-sm">
+                                            <input type="date" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<table id="table_penghuni" class="table table-hover table-bordered table-borderless">
+    <thead>
+        <tr class="thead-dark">
+            <th>Nama Penghuni</th>
+            <th>No Telfon</th>
+            <th>Kamar Nomor</th>
+            <th>Jumlah Penghuni</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Asep</td>
+            <td>087727307534</td>
+            <td>6</td>
+            <td>2</td>
+            <td>10/10/2021</td>
+            <td>10/10/2022</td>
+            <td>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModaledit" data-whatever="">Edit</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModaldelete" data-whatever="">Delete</button>
+
+            </td>
+
+        </tr>
+
+    </tbody>
+</table>
+<div class="modal fade" id="exampleModaledit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Penghuni</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Nama Penghuni
+                                    </div>
+                                    <div class="col-sm">
+                                        <input type="text" class="form-control" />
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        No.Telp
+                                    </div>
+                                    <div class="col-sm">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Jumlah Penghuni
+                                    </div>
+                                    <div class="col-sm">
+                                        <input type="number" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Kamar Nomor
+                                    </div>
+                                    <div class="col-sm">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <br />
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Start
+                                        </div>
+                                        <div class="col-sm">
+                                            <input type="date" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            End
+                                        </div>
+                                        <div class="col-sm">
+                                            <input type="date" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModaldelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Kosan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Yakin ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Button trigger modal modalbenefit -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalbenefit">
+    Tambah Benefit
+</button>
+<br />
+<!-- Modal -->
+<div class="modal fade" id="modalbenefit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Nama Kosan
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="id_kosan">Kosan Gandi</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Penjaga Kosan
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Penjaga Kosan
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<table id="table_benefit" class="table table-hover table-bordered table-borderless">
+    <thead class="thead-dark">
+        <tr>
+
+            <th>Penjaga Kosan</th>
+            <th>Free Biaya admin dan Kebersihan</th>
+
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+
+            <td>Yes</td>
+            <td>Yes</td>
+
+            <td>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalbenefitedit" data-whatever="">Edit</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modaldeletebenefit" data-whatever="">Delete</button>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+<div class="modal fade" id="modalbenefitedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Nama Kosan
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="id_kosan">Kosan Gandi</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Penjaga Kosan
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Penjaga Kosan
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Modaldeletebenefit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Kosan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Yakin ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+
+<!-- Button trigger modal spesifikasi-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modalspesifikasi">
+    Tambah Spesifikasi
+</button>
+<br />
+<!-- Modal -->
+<div class="modal fade" id="Modalspesifikasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Spesifikasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Nama Kosan
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="id_kosan">Kosan Gandi</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Ukuran Kamar
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="3x4">3x4</option>
+                                            <option value="4x4">4x4</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Kamar Mandi diDalam
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<table id="table_spek" class="table table-hover table-bordered table-borderless">
+    <thead class="thead-dark">
+        <tr>
+
+            <th>Ukuran</th>
+            <th>Kamar Mandi</th>
+
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+
+            <td>3x4</td>
+            <td>Di Dalam</td>
+
+            <td>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalspekedit" data-whatever="">Edit</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modalspekdelete" data-whatever="">Delete</button>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+<div class="modal fade" id="modalspekedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Spesifikasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Nama Kosan
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="id_kosan">Kosan Gandi</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Ukuran Kamar
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="3x4">3x4</option>
+                                            <option value="4x4">4x4</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Kamar Mandi diDalam
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Modalspekdelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Spesifikasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Yakin ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Button trigger modal Fasilitas-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modalfasilitas">
+    Tambah Fasilitas
+</button>
+<br />
+<!-- Modal fasilitas -->
+<div class="modal fade" id="Modalfasilitas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Nama Kosan
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="id_kosan">Kosan Gandi</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        AC
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Kasur
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Kulkas
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Kursi
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Lemari
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Mesin Cuci
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Meja Belajar
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Wifi
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        TV
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<table id="table_fasilitas" class="table table-hover table-bordered table-borderless">
+    <thead class="thead-dark">
+        <tr>
+
+            <th>AC</th>
+            <th>Kasur</th>
+            <th>Lemari</th>
+            <th>Mesin Cuci</th>
+            <th>Meja</th>
+            <th>Kulkas</th>
+            <th>Wifi</th>
+            <th>Kursi</th>
+            <th>TV</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>Yes</td>
+
+            <td>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#Modalfasilitasedit" data-whatever="">Edit</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modalfasilitasdelete" data-whatever="">Delete</button>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+<div class="modal fade" id="Modalfasilitasedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Nama Kosan
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="id_kosan">Kosan Gandi</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        AC
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Kasur
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Kulkas
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Kursi
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Lemari
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Mesin Cuci
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Meja Belajar
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Wifi
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        TV
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="Modalfasilitasdelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Fasilitas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Yakin ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/additional-file/datatabe/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_penghuni').DataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#table_benefit').DataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#table_spek').DataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#table_fasilitas').DataTable();
+        });
+    </script>
+}
+
+

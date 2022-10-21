@@ -1,4 +1,4 @@
-﻿
+﻿@model kosPU.Models.LoginViewModel
 @{
     Layout = null;
 }
@@ -49,32 +49,35 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Login</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Login User</h1>
                                     </div>
 
 
-                                   
-                                    <div class="form-group">
-
-
-                                        <input type="text" class="form-control form-control-user"
-                                               id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" />
-                                        <br />
+                                    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                   id="exampleInputPassword" placeholder="Password" />
+
+
+                                            <input type="text" class="form-control form-control-user"
+                                                   id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" @Html.TextBoxFor(m => m.username_user, new { @placeholder = "UserName" })
+                                            <br />
+                                            <div class="form-group">
+                                                <input type="password" class="form-control form-control-user"
+                                                       id="exampleInputPassword" placeholder="Password" @Html.PasswordFor(m => m.password_user, new { @placeholder = "Password" })
+                                            </div>
+
+                                         
+                                                <input type="submit" value="LOGIN" class="btn btn-primary btn-user btn-block">
+
+                                            
+                                                <div class="text-center">
+                                                    <p>Not a member? <a href="~/Account/registeruser">Register</a></p>
+                                                    <p>Kamu salah klik <a href="~/Account/lamanawal">Back</a></p>
+                                                </div>
                                         </div>
-
-                                        <a href="~/Home/Index">
-                                            <input type="submit" value="LOGIN" class="btn btn-primary btn-user btn-block">
-
-                                        </a>
-                                        <div class="text-center">
-                                        <p>Not a member? <a href="~/Account/registeruser">Register</a></p>
-                                      
-                                         </div>
+                                    }
                                     </div>
-                            </div>
                         </div>
                     </div>
                 </div>

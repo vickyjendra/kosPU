@@ -1,0 +1,231 @@
+﻿
+@{
+    ViewBag.Title = "dashboardowner";
+    Layout = "~/Views/Shared/_LayoutOwner.cshtml";
+}
+
+
+<link href="~/additional-file/datatabe/jquery.dataTables.min.css" rel="stylesheet" />
+<!-- Large modal -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Tambah Kosan
+</button>
+
+<!-- Modal tambah kosan -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Tambah Kosan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                Nama Kosan
+                            </div>
+                            <div class="col-sm">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-4">
+                                Jumlah Kamar
+                            </div>
+                            <div class="col-sm">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-4">
+                                Foto
+                            </div>
+                            <div class="col-sm">
+                                <input type="file" class="form-control form-control-user" name="file" />
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                Kosan Khusus
+                            </div>
+                            <div class="col-sm">
+                                <select class="custom-select custom-select-lg mb-3">
+                                    <option selected>Pilih</option>
+                                    <option value="MIX">MIX</option>
+                                    <option value="Putra">Putra</option>
+                                    <option value="Putri">Putri</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                Harga
+                            </div>
+                            <div class="col-sm">
+                                <input type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<br />
+<table id="table_id" class="table table-hover table-bordered table-borderless">
+    <thead>
+        <tr class="thead-dark">
+            <th>Nama Kosan</th>
+            <th>Kosan Khusus</th>
+            <th>Jumlah Kamar</th>
+            <th>Jumlah Diboking</th>
+            <th>Harga</th>
+            <th>Action</th>
+            <th>Daftar Penghuni</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Kosan Gandi</td>
+            <td>MIX</td>
+            <td>16</td>
+            <td>15</td>
+            <td>1.300.000</td>
+            <td>
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModaledit" data-whatever="">Edit</button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModaldelete" data-whatever="">Delete</button>
+
+            </td>
+            <td>
+                <a href="@Url.Action("DetailPenghuni")"><center><i class="fas fa-edit text-info text-center"></i></center></a>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+<div class="modal fade" id="exampleModaledit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Nama Kosan
+                                    </div>
+                                    <div class="col-sm">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Jumlah Kamar
+                                    </div>
+                                    <div class="col-sm">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Kosan Khusus
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="custom-select custom-select-lg mb-3">
+                                            <option selected>Pilih</option>
+                                            <option value="MIX">MIX</option>
+                                            <option value="Putra">Putra</option>
+                                            <option value="Putri">Putri</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Harga
+                                    </div>
+                                    <div class="col-sm">
+                                        <input type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Button trigger modal -->
+<!-- Modal kosan-->
+<div class="modal fade" id="exampleModaldelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Kosan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Yakin ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+
+@section scripts{
+    <script src="~/additional-file/datatabe/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
+    </script>
+}
+
+
+
+
+
+
+
+

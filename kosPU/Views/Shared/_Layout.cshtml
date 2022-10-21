@@ -46,22 +46,8 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="~/Home/Index">
-
-
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Admin Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="~/Home/Index">
-
-
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Owner Dashboard</span>
-                </a>
-            </li>
+           
+            
             <li class="nav-item">
                 <a class="nav-link" href="~/Home/Index">
 
@@ -388,6 +374,7 @@
 
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> </span>
                                 <text class="text-primary">
+
                                     @if (Session["us_usrname"] == null)
                                     {
                                         @Html.ActionLink("Login", "Account")
@@ -396,7 +383,6 @@
                                     {
                                         @Session["us_usrname"].ToString()
                                     }
-
 
 
 
