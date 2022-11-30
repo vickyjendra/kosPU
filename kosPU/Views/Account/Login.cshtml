@@ -42,14 +42,14 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                            <div class="col-lg-6 d-none d-lg-block">
 
 
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Login User</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Login Seeker</h1>
                                     </div>
 
 
@@ -60,11 +60,11 @@
 
 
                                             <input type="text" class="form-control form-control-user"
-                                                   id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" @Html.TextBoxFor(m => m.username_user, new { @placeholder = "UserName" })
+                                                   id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" @Html.TextBoxFor(m => m.username_user)
                                             <br />
                                             <div class="form-group">
                                                 <input type="password" class="form-control form-control-user"
-                                                       id="exampleInputPassword" placeholder="Password" @Html.PasswordFor(m => m.password_user, new { @placeholder = "Password" })
+                                                       id="exampleInputPassword" placeholder="Password" @Html.PasswordFor(m => m.password_user)
                                             </div>
 
                                          
@@ -73,7 +73,7 @@
                                             
                                                 <div class="text-center">
                                                     <p>Not a member? <a href="~/Account/registeruser">Register</a></p>
-                                                    <p>Kamu salah klik <a href="~/Account/lamanawal">Back</a></p>
+                                                    <p>You Clicked Wrong <a href="~/Account/lamanawal">Back</a></p>
                                                 </div>
                                         </div>
                                     }

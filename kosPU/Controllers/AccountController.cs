@@ -26,7 +26,7 @@ namespace kosPU.Controllers
             {
                 return View();
             }
-           
+
         }
         [HttpPost]
         public ActionResult Login(LoginViewModel credentails)
@@ -48,7 +48,7 @@ namespace kosPU.Controllers
                 return RedirectToAction("Login", "Account");
             }
             return View();
-            
+
         }
         public ActionResult lamanawal()
         {
@@ -65,7 +65,7 @@ namespace kosPU.Controllers
             {
                 return View();
             }
-          
+
         }
         [HttpPost]
         public ActionResult LoginOwner(LoginViewModelowner credentails)
@@ -88,7 +88,7 @@ namespace kosPU.Controllers
             }
             return View();
 
-           
+
         }
         public ActionResult registerowner()
         {
@@ -154,8 +154,6 @@ namespace kosPU.Controllers
             SqlConnection myConnection = new SqlConnection();
             myConnection.ConnectionString = connectionString;
             myConnection.Open();
-
-
             var name = form["name_user"].ToString();
             var username = form["username_user"].ToString();
             var phone = form["phone_user"].ToString();
@@ -171,7 +169,6 @@ namespace kosPU.Controllers
             sd.Fill(dtt);
             if (dtt.Rows.Count > 0)
             {
-
             }
             else
             {
@@ -184,7 +181,7 @@ namespace kosPU.Controllers
                 sqlcomm.Parameters.AddWithValue("@username_user", username);
                 sqlcomm.Parameters.AddWithValue("@email_user", email);
                 sqlcomm.Parameters.AddWithValue("@password_user", pass);
-                sqlcomm.Parameters.AddWithValue("@group_user", group);        
+                sqlcomm.Parameters.AddWithValue("@group_user", group);
                 sqlcomm.Parameters.AddWithValue("@address_user", address);
                 sqlcomm.Parameters.AddWithValue("@phone_userr", phone);
                 sqlcomm.Parameters.AddWithValue("@gender", gender);
@@ -192,7 +189,7 @@ namespace kosPU.Controllers
                 sqlconn.Close();
             }
             myConnection.Close();
-            return View();
+            return RedirectToAction("Login", "Account");
         }
         public ActionResult SignOut()
         {
@@ -203,6 +200,48 @@ namespace kosPU.Controllers
         {
             Session.Abandon();
             return RedirectToAction("LoginOwner", "Account");
+        }
+        public ActionResult MyAccount()
+        {
+            if (Session["us_usrname"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            string username = Session["us_usrname"].ToString();
+            var connectionString = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection myConnection = new SqlConnection();
+            myConnection.ConnectionString = connectionString;
+            myConnection.Open();
+            List<myaccount> jc = new List<myaccount>();
+            string query1 = @"  select * from account_user where username_user = @username";
+
+            using (SqlCommand cmd = new SqlCommand(query1, myConnection))
+            {
+
+                cmd.Parameters.AddWithValue("@username", username);
+
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    myaccount account = new myaccount();
+                    account.name_user = dr["name_user"].ToString();
+                    account.email_user = dr["email_user"].ToString();
+                    account.phone_userr = dr["phone_userr"].ToString();
+                    account.gender = dr["gender"].ToString();
+                    account.address_user = dr["address_user"].ToString();
+                    account.username_user = dr["username_user"].ToString();
+                    jc.Add(account);
+                }
+
+               
+
+
+                return View(jc);
+
+            }
+
         }
     }
 }

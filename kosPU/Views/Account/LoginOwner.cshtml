@@ -42,7 +42,7 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                            <div class="col-lg-6 d-none d-lg-block">
 
 
                             </div>
@@ -60,11 +60,11 @@
 
 
                                             <input type="text" class="form-control form-control-user"
-                                                   id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" @Html.TextBoxFor(m => m.username_owner, new { @placeholder = "UserName" })
+                                                   id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" @Html.TextBoxFor(m => m.username_owner)
                                             <br />
                                             <div class="form-group">
                                                 <input type="password" class="form-control form-control-user"
-                                                       id="exampleInputPassword" placeholder="Password" @Html.PasswordFor(m => m.password_owner, new { @placeholder = "Password" })
+                                                       id="exampleInputPassword" placeholder="Password" @Html.PasswordFor(m => m.password_owner)
                                             </div>
 
                                             
@@ -73,7 +73,7 @@
                                             
                                                 <div class="text-center">
                                                     <p>Not a member? <a href="~/Account/registerowner">Register</a></p>
-                                                    <p>Kamu salah klik <a href="~/Account/lamanawal">Back</a></p>
+                                                    <p>you clicked wrong <a href="~/Account/lamanawal">Back</a></p>
                                                 </div>
                                         </div>
                                     }

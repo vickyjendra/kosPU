@@ -1,71 +1,137 @@
-﻿
+﻿@model IEnumerable<kosPU.Models.detailowner>
 @{
     ViewBag.Title = "Boking";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/View1.cshtml";
 }
-<center>
-    <h2>Boking Kosan H.Gandi</h2>
-</center>
-<hr />
+<div class="card">
+
+    <div class="card-body">
+        @foreach (var item in Model)
+        {
+            if (item.kost_name != null)
+            {
+                <center>
+                    <h2>@item.kost_name</h2>
+                </center>
+            }
+        }
+
+    </div>
+</div>
 <br />
+<div class="card">
 
-<form>
-    <div class="form-row">
-        <div class="col">
-            <input type="text" class="form-control" placeholder="Nama Perwakilan">
-        </div>
-        <div class="col">
-            <input type="text" class="form-control" placeholder="Number Telphone">
-        </div>
-    </div>
-    <br />
-    <div class="form-row">
-        <div class="col">
-            <input type="text" class="form-control" placeholder="Email">
-        </div>
-        <div class="col">
-            <input type="text" class="form-control" placeholder="Major ex*(IT 2019)">
-        </div>
-    </div>
-    <br />
-    <center>
-        <h4>Available Room</h4>
-    </center>
-    <div class="form-row">
-        <div class="col">
-            <select class="form-control" aria-label="Default select example">
-                <option selected>Floor</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
+    <div class="card-body">
+        <form>
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Nama Perwakilan">
 
-            </select>
-        </div>
-        <div class="col">
-            <input type="number" class="form-control" placeholder="">
-        </div>
-    </div>
-    <br />
-    <div class="form-row">
-        <div class="col">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Nomor Telfon">
+                    </div>
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col">
+
+                        <input type="text" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="Major ex*(IT 2019)">
+                    </div>
+
+                </div>
+            </div>
+            <br />
+
+
             <center>
-                <label>Start</label><br />
+                <h4>Available Room</h4>
             </center>
-            <input type="date" class="form-control" name="birthdaytime" placeholder="Start">
-        </div>
-        <div class="col">
-            <center>
-                <label>End</label><br />
-            </center>
-            <input type="date" class="form-control" name="birthdaytime" placeholder="End">
-        </div>
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+
+                        <select class="form-control" aria-label="Default select example">
+                            <option selected>Floor</option>
+                            @foreach (var item in Model)
+                            {
+                                if (item.room_floor != null)
+                                {
+                                    <option value="@item.room_floor">@item.room_floor</option>
+                                }
+
+
+                            }
+
+
+
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select class="form-control" aria-label="Default select example">
+                            <option selected>Number Room</option>
+                            @foreach (var item in Model)
+                            {
+                                if (item.room_name != null)
+                                {
+                        <option value="@item.room_name">@item.room_name</option>
+                                }
+
+
+                            }
+                                   
+
+                                </select>
+                    </div>
+
+                </div>
+                <br />
+
+            </div>
+
+
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+                        <center>
+                            <label>Start</label><br />
+                        </center>
+                        <input type="date" class="form-control" name="birthdaytime" placeholder="Start">
+                    </div>
+                    <div class="col">
+                        <center>
+                            <label>End</label><br />
+                        </center>
+                        <input type="date" class="form-control" name="birthdaytime" placeholder="End">
+                    </div>
+
+                </div>
+                <br />
+
+            </div>
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col">
+                        <a href="~/Home/Detail">
+                            <input type="button" class="form-control btn btn-danger" value="BACK">
+                        </a>
+                    </div>
+                    <div class="col">
+
+                        <input type="button" class="form-control btn btn-primary" value="BOOKING">
+                    </div>
+
+                </div>
+                <br />
+
+            </div>
+
+
+        </form>
     </div>
-    <br />
-    <div class="form-row">
-        <div class="col">
-           
-        </div>
-        <div class="col">
-            <input type="button" class="form-control btn-primary" value="BOOKING">
-        </div>
-    </div>
-</form>
+</div>

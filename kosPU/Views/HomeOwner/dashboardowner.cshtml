@@ -1,218 +1,287 @@
-﻿
+﻿@model IEnumerable<kosPU.Models.kosan>
 @{
     ViewBag.Title = "dashboardowner";
-    Layout = "~/Views/Shared/_LayoutOwner.cshtml";
+    Layout = "~/Views/Shared/View1owner.cshtml";
 }
+
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
+
 
 
 <link href="~/additional-file/datatabe/jquery.dataTables.min.css" rel="stylesheet" />
 <!-- Large modal -->
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Tambah Kosan
-</button>
+<div class="card p-2">
 
-<!-- Modal tambah kosan -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Tambah Kosan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    <!-- Button trigger modal -->
+    <div class="card-header pb-0 p-3">
+        <div class="row">
+            <div class="col-6 d-flex align-items-center">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="fas fa-plus"></i> Add Boaring Room </button>
             </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                Nama Kosan
-                            </div>
-                            <div class="col-sm">
-                                <input type="text" class="form-control" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-sm-4">
-                                Jumlah Kamar
-                            </div>
-                            <div class="col-sm">
-                                <input type="text" class="form-control" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-sm-4">
-                                Foto
-                            </div>
-                            <div class="col-sm">
-                                <input type="file" class="form-control form-control-user" name="file" />
 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                Kosan Khusus
-                            </div>
-                            <div class="col-sm">
-                                <select class="custom-select custom-select-lg mb-3">
-                                    <option selected>Pilih</option>
-                                    <option value="MIX">MIX</option>
-                                    <option value="Putra">Putra</option>
-                                    <option value="Putri">Putri</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-4">
-                                Harga
-                            </div>
-                            <div class="col-sm">
-                                <input type="text" class="form-control" />
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-
-            </div>
         </div>
     </div>
-</div>
-<hr />
-<br />
-<table id="table_id" class="table table-hover table-bordered table-borderless">
-    <thead>
-        <tr class="thead-dark">
-            <th>Nama Kosan</th>
-            <th>Kosan Khusus</th>
-            <th>Jumlah Kamar</th>
-            <th>Jumlah Diboking</th>
-            <th>Harga</th>
-            <th>Action</th>
-            <th>Daftar Penghuni</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Kosan Gandi</td>
-            <td>MIX</td>
-            <td>16</td>
-            <td>15</td>
-            <td>1.300.000</td>
-            <td>
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModaledit" data-whatever="">Edit</button>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModaldelete" data-whatever="">Delete</button>
 
-            </td>
-            <td>
-                <a href="@Url.Action("DetailPenghuni")"><center><i class="fas fa-edit text-info text-center"></i></center></a>
-            </td>
-        </tr>
 
-    </tbody>
-</table>
-<div class="modal fade" id="exampleModaledit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
+    @*<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+            Tambah Kosan
+        </button>*@
+
+    <!-- Modal tambah kosan -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form action="/HomeOwner/inputkosan" method="post" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add Boaring Room</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                     <div class="container">
+
                         <div class="row">
                             <div class="col">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        Nama Kosan
+                                        Boarding Room Name
                                     </div>
                                     <div class="col-sm">
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" name="name" />
                                     </div>
                                 </div>
                                 <br />
+
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        Jumlah Kamar
+                                        Photo
                                     </div>
                                     <div class="col-sm">
-                                        <input type="text" class="form-control" />
+                                        <input type="file" class="form-control form-control-user" />
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        Kosan Khusus
+                                        Special boarding house
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
+                                        <select class="form-control" aria-label="Default select example" name="khusus">
+
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
                                             <option value="MIX">MIX</option>
-                                            <option value="Putra">Putra</option>
-                                            <option value="Putri">Putri</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        Harga
+                                        Price
                                     </div>
                                     <div class="col-sm">
-                                        <input type="text" class="form-control" />
+                                        <input type="text" class="form-control" name="price" />
+                                        <input type="text" class="form-control" id="Marker" name="lokasi"/>
+
                                     </div>
                                 </div>
+                                <br />
+
                             </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+
+
+
+
+                            <div id='map' style='width: 1040px; height: 680px; margin: 0 auto;'>
+
+                            </div>
+
+
 
                         </div>
                     </div>
+
+
+
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+
+                    </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
             </div>
         </div>
     </div>
-</div>
-<!-- Button trigger modal -->
-<!-- Modal kosan-->
-<div class="modal fade" id="exampleModaldelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Kosan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+
+    <table id="table_id" class="class=" table table-hover table-borderless">
+        <thead>
+            <tr class="thead-dark">
+                <th>Boarding Room Photo</th>
+                <th>Boarding Room Name</th>
+                <th>Special boarding house</th>
+                <th>Number of rooms</th>
+                <th>Booked Amount</th>
+                <th>Price</th>
+                <th>Action</th>
+                <th>List of Residents</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="~/additional-file/images/kosangandi2.PNG" width="120" height="150" />
+
+                    </td>
+                    <td>
+                        <center>
+                            @Html.DisplayFor(modelItem => item.kost_name)
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            @Html.DisplayFor(modelItem => item.kost_khusus)
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            @Html.DisplayFor(modelItem => item.kost_price)
+                        </center>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModaledit" data-whatever="">Edit</button>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModaldelete" data-whatever="">Delete</button>
+
+                    </td>
+                    <td>
+                        <a href="@Url.Action("DetailPenghuni", new { kost_id = item.kost_id})"><center><i class="fas fa-edit text-info text-center"></i></center></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @foreach(var item in Model)
+            {
+                <input type="text" value="@item.kost_location" />
+            }
+    <div class="modal fade" id="exampleModaledit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Nama Kosan
+                                        </div>
+                                        <div class="col-sm">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Jumlah Kamar
+                                        </div>
+                                        <div class="col-sm">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Kosan Khusus
+                                        </div>
+                                        <div class="col-sm">
+                                            <select class="custom-select custom-select-lg mb-3">
+                                                <option selected>Pilih</option>
+                                                <option value="MIX">MIX</option>
+                                                <option value="Putra">Putra</option>
+                                                <option value="Putri">Putri</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            Harga
+                                        </div>
+                                        <div class="col-sm">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Send message</button>
+                </div>
             </div>
-            <div class="modal-body">
-                Yakin ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+    <!-- Modal kosan-->
+    <div class="modal fade" id="exampleModaldelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Kosan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Yakin ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <hr />
-
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
 @section scripts{
     <script src="~/additional-file/datatabe/jquery.dataTables.min.js"></script>
     <script>
@@ -220,6 +289,44 @@
             $('#table_id').DataTable();
         });
     </script>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1Ijoidmlja3lqbmQiLCJhIjoiY2w5ZjVxNWl6MG5ydjNybXlka3FuY2ZoNCJ9.ZnazGQ7N4dEDKgQxMqYiHA';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+            style: 'mapbox://styles/mapbox/streets-v11',
+         
+            center: [107.1704454149077, -6.28508748351949],
+            zoom: 14
+        });
+
+        map.addControl(
+            new MapboxDirections({
+                accessToken: mapboxgl.accessToken
+            }),
+            'top-left'
+        );
+        // Create a new marker.
+    
+        const marker2 = new mapboxgl.Marker()
+            .setLngLat([107.16708904961192, -6.283718415240215])
+            .setPopup(new mapboxgl.Popup().setHTML("Kosan H.Gandi"))
+            .addTo(map);
+        //Marker
+        let marker = null
+        map.on('click', function (e) {
+            if (marker == null) {
+                marker = new mapboxgl.Marker()
+                    .setLngLat(e.lngLat)
+                    .addTo(map);
+            } else {
+                marker.setLngLat(e.lngLat)
+            }
+            lk = e.lngLat
+            document.getElementById("Marker").value = e.lngLat.lat + "," + e.lngLat.lng;
+        });
+    </script>
+
 }
 
 
