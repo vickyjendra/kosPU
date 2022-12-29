@@ -3,10 +3,17 @@
     ViewBag.Title = "DetailPenghuni";
     Layout = "~/Views/Shared/View1owner.cshtml";
 }
+@foreach (var item in Model)
+{
+    if (item.kost_id != 0)
+    {
+        <center>
+            <h2 class="text-white mb-2 mt-5">Detail Kosan @item.kost_name</h2>
+        </center>
+    }
 
-<center>
-    <h2 class="text-white mb-2 mt-5">Detail Kosan Gandi</h2>
-</center>
+}
+
 <link href="~/additional-file/datatabe/jquery.dataTables.min.css" rel="stylesheet" />
 <!-- Button trigger modal -->
 <div class="card p-2">
@@ -53,7 +60,7 @@
                                         </div>
                                     </div>
                                     <br />
-                                   
+
                                 </div>
                                 <div class="col">
                                     <div class="row">
@@ -83,7 +90,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
-                 </form>
+                </form>
             </div>
         </div>
     </div>
@@ -101,29 +108,29 @@
         <tbody>
             @foreach (var item in Model)
             {
-                if(item.room_name != null)
+                if (item.room_name != null)
                 {
 
-               
 
-            <tr>
 
-                <td>
-                    <center>
-                @item.room_name
-                    </center>
-                </td>
-                <td>
-                    <center>
-                        @item.room_floor
-                    </center>
-                </td>
-                
-                <td>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalbenefitedit" data-whatever="">Edit</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modaldeletebenefit" data-whatever="">Delete</button>
-                </td>
-            </tr>
+                    <tr>
+
+                        <td>
+                            <center>
+                                @item.room_name
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                @item.room_floor
+                            </center>
+                        </td>
+
+                        <td>
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalbenefitedit" data-whatever="">Edit</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modaldeletebenefit" data-whatever="">Delete</button>
+                        </td>
+                    </tr>
                 }
             }
         </tbody>
@@ -350,61 +357,61 @@
                 {
 
 
-            <tr>
-                <td>
-                    <center>
-                        @Html.DisplayFor(modelItem => item.resident_name)
-                    </center>
-                </td>
-                <td>
-                    <center>
-                        @Html.DisplayFor(modelItem => item.no_telp)
-                    </center>
-                </td>
-                <td>
-                </td>
-                <td>
-                    <center>
+                    <tr>
+                        <td>
+                            <center>
+                                @Html.DisplayFor(modelItem => item.resident_name)
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                @Html.DisplayFor(modelItem => item.no_telp)
+                            </center>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <center>
 
-                    </center>
-                </td>
-                <td>
-                    <center>
-                        @Html.DisplayFor(modelItem => item.email)
-                    </center>
-                </td>
-                <td>
-                    @if (item.start == null)
-                    {
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                @Html.DisplayFor(modelItem => item.email)
+                            </center>
+                        </td>
+                        <td>
+                            @if (item.start == null)
+                            {
 
-                    }
-                    else
-                    {
-                        @item.start.Value.ToShortDateString()
-                    }
+                            }
+                            else
+                            {
+                                @item.start.Value.ToShortDateString()
+                            }
 
-                </td>
-                <td>
-                    @if(item.res_end == null)
-                    {
+                        </td>
+                        <td>
+                            @if (item.res_end == null)
+                            {
 
-                    }
-                    else
-                    {
-                         @item.res_end.Value.ToShortDateString()
-                    }
-                   
-                </td>
-                <td>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModaledit" data-whatever="">Edit</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModaldelete" data-whatever="">Delete</button>
+                            }
+                            else
+                            {
+                                @item.res_end.Value.ToShortDateString()
+                            }
 
-                </td>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModaledit" data-whatever="">Edit</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModaldelete" data-whatever="">Delete</button>
 
-            </tr>
+                        </td>
+
+                    </tr>
                 }
             }
-            </tbody>
+        </tbody>
     </table>
 </div>
 <div class="modal fade" id="exampleModaledit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -532,7 +539,7 @@
             <div class="modal-content">
                 <form action="/HomeOwner/Addbenefit" method="post" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Add Benefit</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -543,7 +550,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
-                                        
+
                                     </div>
                                     <br />
                                     <div class="row">
@@ -551,7 +558,7 @@
                                             Penjaga Kosan
                                         </div>
                                         <div class="col-sm">
-                                            <select class="form-group" name="penjaga">
+                                            <select class="form-control" name="penjaga">
                                                 <option selected>Pilih</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
@@ -566,7 +573,7 @@
                                             free biaya admin
                                         </div>
                                         <div class="col-sm">
-                                            <select class="form-group" name="admin">
+                                            <select class="form-control" name="admin">
                                                 <option selected>Pilih</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
@@ -577,11 +584,11 @@
                                         {
                                             if (data.kost_id != 0)
                                             {
-                                                <input type="text" value="@data.kost_id" name="kost_id" />
+                                                <input type="hidden" value="@data.kost_id" name="kost_id" />
                                             }
                                         }
                                     </div>
-                               </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -605,30 +612,30 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var item in Model)
+            @foreach (var item in Model)
             {
-                if(item.ben_keep != null)
-                {              
-            <tr>
-                <td>
-                    <center>
-                        @item.ben_keep
-                    </center>
-                </td>
-                <td>
-                    <center>
-                        @item.ben_free
-                    </center>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalbenefitedit" data-whatever="">Edit</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modaldeletebenefit" data-whatever="">Delete</button>
-                </td>
-            </tr>
+                if (item.ben_keep != null)
+                {
+                    <tr>
+                        <td>
+                            <center>
+                                @item.ben_keep
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                @item.ben_free
+                            </center>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalbenefitedit" data-whatever="">Edit</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modaldeletebenefit" data-whatever="">Delete</button>
+                        </td>
+                    </tr>
                 }
             }
         </tbody>
-    </table>    
+    </table>
 </div>
 <div class="modal fade" id="modalbenefitedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -719,7 +726,7 @@
         </div>
     </div>
 </div>
-
+<br />
 <div class="card p-2">
     <div class="card-header pb-0 p-3">
         <div class="row">
@@ -748,8 +755,8 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
-                                        
-                                       
+
+
                                     </div>
                                     <br />
                                     <div class="row">
@@ -800,7 +807,7 @@
                     </div>
                 </form>
             </div>
-           
+
         </div>
     </div>
     <br />
@@ -815,30 +822,30 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var item in Model) 
+            @foreach (var item in Model)
             {
-                if(item.spek_size != null)
+                if (item.spek_size != null)
                 {
 
-                
-            <tr>
 
-                <td>
-                    <center>
-                        @item.spek_size
-                    </center>
-                </td>
-                <td>
-                    <center>
-                        @item.spek_bath
-                    </center>
-                <td>
+                    <tr>
 
-                <td>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalspekedit" data-whatever="">Edit</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modalspekdelete" data-whatever="">Delete</button>
-                </td>
-            </tr>
+                        <td>
+                            <center>
+                                @item.spek_size
+                            </center>
+                        </td>
+                        <td>
+                            <center>
+                                @item.spek_bath
+                            </center>
+                        <td>
+
+                        <td>
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalspekedit" data-whatever="">Edit</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modalspekdelete" data-whatever="">Delete</button>
+                        </td>
+                    </tr>
                 }
             }
         </tbody>
@@ -1133,45 +1140,46 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var item in Model)
+            @foreach (var item in Model)
             {
-                if(item.AC != null) { 
+                if (item.AC != null)
+                {
 
-            <tr>
+                    <tr>
 
-                <td>
-                    @item.AC
-                </td>
-                <td>
-                    @item.BED
-                </td>
-                <td>
-                    @item.cupboard
-                </td>
-                <td>
-                    @item.washing
-                </td>
-                <td>
-                    @item.tabble
-                </td>
-                <td>
-                    @item.regni
-                </td>
-                <td>
-                    @item.wifi
-                </td>
-                <td>
-                    @item.chair
-                </td>
-                <td>
-                    @item.TV
-                </td>
+                        <td>
+                            @item.AC
+                        </td>
+                        <td>
+                            @item.BED
+                        </td>
+                        <td>
+                            @item.cupboard
+                        </td>
+                        <td>
+                            @item.washing
+                        </td>
+                        <td>
+                            @item.tabble
+                        </td>
+                        <td>
+                            @item.regni
+                        </td>
+                        <td>
+                            @item.wifi
+                        </td>
+                        <td>
+                            @item.chair
+                        </td>
+                        <td>
+                            @item.TV
+                        </td>
 
-                <td>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#Modalfasilitasedit" data-whatever="">Edit</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modalfasilitasdelete" data-whatever="">Delete</button>
-                </td>
-            </tr>
+                        <td>
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#Modalfasilitasedit" data-whatever="">Edit</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modalfasilitasdelete" data-whatever="">Delete</button>
+                        </td>
+                    </tr>
                 }
             }
         </tbody>

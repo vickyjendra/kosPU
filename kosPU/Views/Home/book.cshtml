@@ -1,0 +1,129 @@
+﻿@model IEnumerable<kosPU.Models.detailowner>
+@{
+    ViewBag.Title = "book";
+    Layout = "~/Views/Shared/View1.cshtml";
+}
+<div class="card">
+
+    <div class="card-body">
+
+        <center>
+            <h2>Detail Booking</h2>
+        </center>
+    </div>
+</div>
+<br />
+<div class="card">
+
+    <div class="card-body">
+        <form action="/Home/paymethod" method="post" enctype="multipart/form-data">
+            @foreach (var item in Model)
+            {
+
+              
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Nama Perwakilan" value="@item.NAME" readonly>
+
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Nomor Telfon" value="@item.NOTELP" readonly>
+                        </div>
+
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col">
+
+                            <input type="text" class="form-control" placeholder="Email" value="@item.EMAIL" readonly>
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Major ex*(IT 2019)" value="@item.MAJOR" readonly>
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+
+
+                <center>
+                    <h4>Booking Room</h4>
+                </center>
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col">
+
+                            <select class="form-control" aria-label="Default select example" name="floor">
+                                <option selected value="@item.FLOOR"> @item.FLOOR</option>
+
+
+
+
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select class="form-control" aria-label="Default select example" name="room">
+                                <option selected value="@item.NUMBER_ROOM">@item.NUMBER_ROOM</option>
+
+
+
+                            </select>
+                        </div>
+
+                    </div>
+                    <br />
+
+                </div>
+
+
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col">
+                            <center>
+                                <label>Start</label><br />
+
+                            </center>
+                         
+
+                            <input type="text" class="form-control" name="start" value="@item.START.Value.ToShortDateString()" readonly>
+                        </div>
+                        <div class="col">
+                            <center>
+                                <label>total</label><br />
+                            </center>
+                            <input type="number" class="form-control" name="totalbook" placeholder="End" value="@item.total_book" readonly>
+                        </div>
+
+                    </div>
+                    <br />
+
+                </div>
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col">
+                            <label>Choose Payment Method</label><br />
+                            <select class="form-select" aria-label="Default select example" name="method">
+                                <option selected>Open this select menu</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Transfer">Transfer</option>
+
+                            </select>
+
+                        </div>
+                        <div class="col">
+                            <input type="hidden" class="form-control" name="kost_id" value="@item.kost_id">
+                            <input type="hidden" class="form-control" name="booking_id" value="@item.booking_id">
+                            <input type="submit" class="form-control btn btn-primary" value="BOOKING">
+                        </div>
+
+                    </div>
+                    <br />
+
+                </div>
+
+            }
+        </form>
+    </div>
+</div>
+

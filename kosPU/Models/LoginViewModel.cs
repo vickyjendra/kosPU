@@ -14,5 +14,7 @@ namespace kosPU.Models
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string password_user { get; set; }
+
+        public int kost_id { get; set; }
     }
 }

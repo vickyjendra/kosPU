@@ -14,6 +14,7 @@ namespace kosPU.Controllers
     public class AccountController : Controller
     {
         KosanEntities entity = new KosanEntities();
+        KosanEntities1 Entities1 = new KosanEntities1();
         // GET: Account
         public ActionResult Login()
         {
@@ -32,12 +33,13 @@ namespace kosPU.Controllers
         public ActionResult Login(LoginViewModel credentails)
         {
             string encrypt1 = encrypt.MD5Hash(credentails.password_user);
-            bool userExist = entity.account_user.Any(x => x.username_user == credentails.username_user && x.password_user == encrypt1);
-            account_user u = entity.account_user.FirstOrDefault(x => x.username_user == credentails.username_user && x.password_user == encrypt1);
+            bool userExist = Entities1.account_user.Any(x => x.username_user == credentails.username_user && x.password_user == encrypt1);
+            account_user u = Entities1.account_user.FirstOrDefault(x => x.username_user == credentails.username_user && x.password_user == encrypt1);
 
             if (userExist)
             {
                 Session["us_usrname"] = u.username_user.ToString();
+                Session["kost_id"] = u.kost_id;
                 FormsAuthentication.SetAuthCookie(u.username_user, false);
 
                 return RedirectToAction("Index", "Home");
@@ -77,14 +79,15 @@ namespace kosPU.Controllers
             if (userExist)
             {
                 Session["us_usrname"] = u.username_owner.ToString();
+                
                 FormsAuthentication.SetAuthCookie(u.username_owner, false);
 
-                return RedirectToAction("Index", "HomeOwner");
+                return RedirectToAction("dashboardowner", "HomeOwner");
             }
             ModelState.AddModelError("", "udah ada");
             if (Session["us_usrname"] == null)
             {
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("LoginOwner", "Account");
             }
             return View();
 

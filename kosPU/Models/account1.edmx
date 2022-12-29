@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="KosanModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="account_user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_user" Type="varchar" MaxLength="50" />
+          <Property Name="username_user" Type="varchar" MaxLength="50" />
+          <Property Name="email_user" Type="varchar" MaxLength="50" />
+          <Property Name="password_user" Type="varchar" MaxLength="50" />
+          <Property Name="group_user" Type="int" />
+          <Property Name="phone_user" Type="varchar" MaxLength="50" />
+          <Property Name="gender-user" Type="varchar" MaxLength="50" />
+          <Property Name="createddate_user" Type="datetime" />
+          <Property Name="address_user" Type="varchar" MaxLength="50" />
+          <Property Name="phone_userr" Type="nvarchar" MaxLength="50" />
+          <Property Name="gender" Type="varchar" MaxLength="50" />
+          <Property Name="create_date" Type="date" />
+          <Property Name="kost_id" Type="int" />
+        </EntityType>
+        <EntityContainer Name="KosanModel1StoreContainer">
+          <EntitySet Name="account_user" EntityType="Self.account_user" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KosanModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="account_user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="username_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="group_user" Type="Int32" />
+          <Property Name="phone_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="gender_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="createddate_user" Type="DateTime" Precision="3" />
+          <Property Name="address_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone_userr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="create_date" Type="DateTime" Precision="0" />
+          <Property Name="kost_id" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="KosanEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="account_user" EntityType="Self.account_user" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KosanModel1StoreContainer" CdmEntityContainer="KosanEntities1">
+          <EntitySetMapping Name="account_user">
+            <EntityTypeMapping TypeName="KosanModel1.account_user">
+              <MappingFragment StoreEntitySet="account_user">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="name_user" ColumnName="name_user" />
+                <ScalarProperty Name="username_user" ColumnName="username_user" />
+                <ScalarProperty Name="email_user" ColumnName="email_user" />
+                <ScalarProperty Name="password_user" ColumnName="password_user" />
+                <ScalarProperty Name="group_user" ColumnName="group_user" />
+                <ScalarProperty Name="phone_user" ColumnName="phone_user" />
+                <ScalarProperty Name="gender_user" ColumnName="gender-user" />
+                <ScalarProperty Name="createddate_user" ColumnName="createddate_user" />
+                <ScalarProperty Name="address_user" ColumnName="address_user" />
+                <ScalarProperty Name="phone_userr" ColumnName="phone_userr" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="kost_id" ColumnName="kost_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -148,11 +148,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>account.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\account1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>account1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\account1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>account1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\account1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>account1.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\account_ownerr.cs">
       <DependentUpon>account.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\account_user.cs">
-      <DependentUpon>account.tt</DependentUpon>
+      <DependentUpon>account1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\detailowner.cs" />
     <Compile Include="Models\encrypt.cs" />
@@ -178,10 +193,14 @@
     <Content Include="additional-file\images\double-bed.png" />
     <Content Include="additional-file\images\free.png" />
     <Content Include="additional-file\images\FRM09_01.jpg" />
+    <Content Include="additional-file\images\ISH-Hitam.png" />
+    <Content Include="additional-file\images\ISH-Putih.png" />
     <Content Include="additional-file\images\kosandeket pu.PNG" />
     <Content Include="additional-file\images\kosangandi1.PNG" />
     <Content Include="additional-file\images\kosangandi2.PNG" />
     <Content Include="additional-file\images\location.png" />
+    <Content Include="additional-file\images\Logo-ISH-Hitam.png" />
+    <Content Include="additional-file\images\Logo-ISH-Putih.png" />
     <Content Include="additional-file\images\mattel.png" />
     <Content Include="additional-file\images\policeman.png" />
     <Content Include="additional-file\images\refrigerator.png" />
@@ -369,6 +388,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>account.edmx</DependentUpon>
       <LastGenOutput>account.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\account1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>account1.edmx</DependentUpon>
+      <LastGenOutput>account1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\account1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>account1.edmx</DependentUpon>
+      <LastGenOutput>account1.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -634,6 +663,13 @@
     <Content Include="assets\scss\argon-dashboard\_utilities-extend.scss" />
     <Content Include="assets\scss\argon-dashboard\_utilities.scss" />
     <Content Include="assets\scss\argon-dashboard\_variables.scss" />
+    <EntityDeploy Include="Models\account1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>account1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\account1.edmx.diagram">
+      <DependentUpon>account1.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2513,9 +2549,18 @@
     <Content Include="Views\Shared\View1.cshtml" />
     <Content Include="Views\Account\MyAccount.cshtml" />
     <Content Include="Views\Shared\View1owner.cshtml" />
+    <Content Include="Views\Home\book.cshtml" />
+    <Content Include="Views\Home\payment.cshtml" />
+    <Content Include="Views\Home\checkout.cshtml" />
+    <Content Include="Views\HomeOwner\request.cshtml" />
+    <Content Include="Views\Home\MyKost.cshtml" />
+    <Content Include="Views\HomeOwner\history.cshtml" />
+    <Content Include="Views\HomeOwner\booked.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="document\payment\" />
+    <Folder Include="document\photokost\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -27,5 +27,6 @@ namespace kosPU.Models
         public string phone_userr { get; set; }
         public string gender { get; set; }
         public Nullable<System.DateTime> create_date { get; set; }
+        public Nullable<int> kost_id { get; set; }
     }
 }

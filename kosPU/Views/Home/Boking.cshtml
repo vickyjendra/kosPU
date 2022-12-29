@@ -22,26 +22,27 @@
 <div class="card">
 
     <div class="card-body">
-        <form>
+        <form action="/Home/booking" method="post" enctype="multipart/form-data">
             <div class="container text-center">
                 <div class="row">
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="Nama Perwakilan">
+                        <input type="text" class="form-control" placeholder="Nama Perwakilan" name="name">
 
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="Nomor Telfon">
+                        <input type="text" class="form-control" placeholder="Nomor Telfon" name="telp">
                     </div>
 
                 </div>
                 <br />
                 <div class="row">
                     <div class="col">
-
-                        <input type="text" class="form-control" placeholder="Email">
+                       
+          
+                        <input type="text" class="form-control" placeholder="Email" name="email">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="Major ex*(IT 2019)">
+                        <input type="text" class="form-control" placeholder="Major ex*(IT 2019)" name="major">
                     </div>
 
                 </div>
@@ -56,12 +57,13 @@
                 <div class="row">
                     <div class="col">
 
-                        <select class="form-control" aria-label="Default select example">
+                        <select class="form-control" aria-label="Default select example" name="floor">
                             <option selected>Floor</option>
                             @foreach (var item in Model)
                             {
                                 if (item.room_floor != null)
-                                {
+                                {  
+                                    
                                     <option value="@item.room_floor">@item.room_floor</option>
                                 }
 
@@ -73,20 +75,23 @@
                         </select>
                     </div>
                     <div class="col">
-                        <select class="form-control" aria-label="Default select example">
+                        <select class="form-control" aria-label="Default select example" name="room">
                             <option selected>Number Room</option>
                             @foreach (var item in Model)
                             {
                                 if (item.room_name != null)
                                 {
-                        <option value="@item.room_name">@item.room_name</option>
+                                   
+                                        <option value="@item.room_name">@item.room_name</option>
+                                    
+
                                 }
 
 
                             }
-                                   
 
-                                </select>
+
+                        </select>
                     </div>
 
                 </div>
@@ -101,13 +106,20 @@
                         <center>
                             <label>Start</label><br />
                         </center>
-                        <input type="date" class="form-control" name="birthdaytime" placeholder="Start">
+                        <input type="date" class="form-control" name="startbooking" placeholder="Start">
                     </div>
                     <div class="col">
                         <center>
-                            <label>End</label><br />
+                            <label>Booking per</label><br />
                         </center>
-                        <input type="date" class="form-control" name="birthdaytime" placeholder="End">
+                        <select class="form-select" aria-label="Default select example" name="period">
+                            <option selected>Open this select menu</option>
+                            <option value=1>One Month</option>
+                            <option value=3>3 Month</option>
+                            <option value=6>6 Month</option>
+                            <option value=12>1 Years</option>
+                        </select>
+
                     </div>
 
                 </div>
@@ -122,8 +134,18 @@
                         </a>
                     </div>
                     <div class="col">
+                        @foreach (var item in Model)
+                        {
+                            if (item.kost_id != 0)
+                            {
+                                <input type="hidden" value="@item.kost_id" name="kost_id" />
+                                <input type="hidden" name="harga" value="@item.kost_price">
+                                <input type="submit" value="Choose Payment Menthod" class="btn btn-primary btn-user btn-block">
 
-                        <input type="button" class="form-control btn btn-primary" value="BOOKING">
+
+                            }
+                        }
+
                     </div>
 
                 </div>
@@ -133,5 +155,15 @@
 
 
         </form>
+        @if (TempData["udahboking"] != null)
+        {
+            <script type="text/javascript">
+                      window.onload = function () {
+                      swal("Yess...!", '@TempData["udahboking"]', "success");
+                    };
+            </script>
+        }
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

@@ -1,0 +1,244 @@
+﻿
+@{@model IEnumerable<kosPU.Models.detailowner>
+ViewBag.Title = "payment";
+Layout = "~/Views/Shared/View1.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+
+
+<div class="card">
+
+    <div class="card-body">
+
+        <center>
+            <h2>Payment</h2>
+        </center>
+
+
+    </div>
+</div>
+<br />
+@foreach (var item in Model)
+{
+    if (item.method_pay == "Cash")
+    {
+        <div class="card">
+
+            <div class="card-body">
+
+                <center>
+                    <h4>Pleace Contact :</h4>
+                    @foreach (var data in Model)
+                    {
+                        <h4>@data.kost_notelp</h4>
+                    }
+                </center>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Upload Kwitansi
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="/Home/paycash" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Upload Kwitansi</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="file" class="form-control" name="file" />
+                                    @foreach (var item1 in Model)
+                                    {
+                                        if (item1.booking_usr != null)
+                                        {
+                                            <input type="text" name="booking_id" value="@item1.booking_id">
+                                            <input type="text" name="kost_id" value="@item1.kost_id">
+                                        }
+
+                                    }
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                             </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+}
+
+@foreach (var item in Model)
+{
+    if (item.method_pay == "Transfer")
+    {
+        
+        <div class="card">
+            <div class="card-header">
+                <center>
+                    <h4>Pleace Transfer to :</h4>
+                    @foreach (var data in Model)
+                    {
+
+                        <h4>@data.kost_norek</h4>
+                        <h4>@data.kost_bank</h4>
+                        <h4>@data.kost_kostname</h4>
+                    }
+
+                </center>
+            </div>
+            <div class="card-body">
+                @if(item.btn_status_pay == null)
+                {
+
+
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Upload
+                </button>
+                }
+                <table id="table_fasilitas" class="table table-hover table-bordered table-borderless">
+                    <thead class="thead-dark">
+                        <tr>
+
+                            <th>Sender Name</th>
+                            <th>Rekenning Name</th>
+                            <th>Bank Name</th>
+                            <th>Rekening Number</th>
+                            <th>File</th>
+                            <th>Action</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var data in Model)
+                        {
+                            if (data.sender != null)
+                            {
+
+
+
+                        <tr>
+
+
+
+                            <td>
+                                <center>
+                                    @data.sender
+                                </center>
+                            </td>
+                            <td>
+                                <center>
+                                    @data.norekname
+                                </center>
+                            </td>
+                            <td>
+                                <center>
+                                    @data.bank
+                                </center>
+                            </td>
+                            <td>
+                                <center>
+                                    @data.norek
+                                </center>
+                            </td>
+                            <td>
+                                <center>
+                                    @data.bukti
+                                </center>
+                            </td>
+
+
+
+
+
+
+                            <td>
+
+                                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#Modalfasilitasedit" data-whatever="">Replace</button>
+
+                            </td>
+                            <td>
+
+                                @item.pay_status
+
+                            </td>
+                        </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    }
+}
+
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/Home/pay" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload Payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <label>Sender Name</label>
+                    <input type="text" class="form-control" placeholder="Sender Name" name="sender">
+
+                    <br />
+                    <label>Rekening Name</label>
+                    <input type="text" class="form-control" placeholder="Rekening Name" name="norekname">
+                    <br />
+                    <label>Rekening Number</label>
+                    <input type="text" class="form-control" placeholder="Rekening Name" name="norek">
+                    <br />
+                    <label>Bank Name</label>
+                    <input type="text" class="form-control" placeholder="Bank Name" name="bank">
+                    <br />
+                    @foreach (var item in Model)
+                    {
+                        if (item.booking_usr != null)
+                        {
+                            <input type="hidden" name="booking_id" value="@item.booking_id">
+                            <input type="hidden" name="kost_id" value="@item.kost_id">
+                        }
+
+                    }
+
+
+
+
+
+
+                    <label>file</label>
+                    <input type="file" class="form-control" placeholder="file" name="file">
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </form>
+</div>
+    </div>
+</div>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+    });
+</script>

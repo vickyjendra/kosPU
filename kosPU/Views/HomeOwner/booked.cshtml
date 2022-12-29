@@ -1,0 +1,214 @@
+﻿@model IEnumerable<kosPU.Models.kosan>
+@{
+    ViewBag.Title = "booked";
+    Layout = "~/Views/Shared/View1owner.cshtml";
+}
+
+<h2>booked</h2>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div class="card">
+    <table id="table_id" class="class=" table table-hover table-borderless">
+        <thead>
+            <tr class="thead-dark">
+                <th>
+                    <center>
+                        Boarding Room NAME
+                    </center>
+                </th>
+                <th>
+                    <center>
+                        Floor
+                    </center>
+                </th>
+                <th>
+                    <center>
+                        Room Name
+                    </center>
+                </th>
+                <th>
+                    <center>
+                        Resident Name
+                    </center>
+                </th>
+                <th>
+                    <center>
+                        Email
+                    </center>
+                </th>
+                <th>
+                    <center>
+                        Telphone Number
+                    </center>
+                </th>
+                <th>
+                    <center>
+                        Major
+                    </center>
+                </th>
+                <th>
+                    <center>
+                        Start At
+                    </center>
+                </th>
+                <th>
+                    <center>
+                        Periode
+                    </center>
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.NAME != null)
+                {
+
+
+            <tr>
+
+                <td>
+                    <center>
+                        @Html.DisplayFor(modelItem => item.kost_name)
+                    </center>
+                </td>
+                <td>
+                    <center>
+                        @Html.DisplayFor(modelItem => item.room_floor)
+                    </center>
+                </td>
+                <td>
+                    <center>
+                        @Html.DisplayFor(modelItem => item.room_name)
+                        <input type="hidden" value="@item.kost_id" name="payusr" />
+                    </center>
+                </td>
+                <td>
+                    <center>
+                        @Html.DisplayFor(modelItem => item.NAME)
+                        <input type="hidden" value="@item.pay_usr" name="payusr" />
+                    </center>
+                </td>
+                <td>
+                    <center>
+                        @Html.DisplayFor(modelItem => item.EMAIL)
+                        <input type="hidden" value="@item.room_id" name="room_id" />
+                    </center>
+                </td>
+                <td>
+                    <center>
+                        @Html.DisplayFor(modelItem => item.NOTELP)
+                        <input type="hidden" value="@item.payment_id" name="payment_id" />
+                    </center>
+                </td>
+                <td>
+                    <center>
+                        @Html.DisplayFor(modelItem => item.MAJOR)
+                        <input type="hidden" value="@item.payment_id" name="payment_id" />
+                    </center>
+                </td>
+                <td>
+                    <center>
+                        @item.START.Value.ToShortDateString()
+                        <input type="hidden" value="@item.payment_id" name="payment_id" />
+                    </center>
+                </td>
+                <td>
+                    <center>
+                        @item.periode
+                        <input type="hidden" value="@item.payment_id" name="payment_id" />
+                    </center>
+                </td>
+             
+
+            </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).on("click", ".open-approve", function () {
+        var payment = $(this).data('payment');
+        $(".modal-body #payment").val(payment);
+        var room = $(this).data('room');
+        $(".modal-body #room").val(room);
+        var type = $(this).data('type');
+        $(".modal-body #type").val(type);
+        var kost = $(this).data('kost');
+        $(".modal-body #kost").val(kost);
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+    });
+
+
+
+
+
+</script>
+<!-- Modal approve-->
+<div class="modal fade" id="approve" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/HomeOwner/approve" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Approve</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="hidden" name="payment_id" id="payment" value="" />
+                                @*@item.kost_name*@
+                            </div>
+                            <div class="col">
+                                <input type="hidden" name="room_id" id="room" value="" />
+                                <input type="text" name="username" id="type" value="" />
+                                <input type="text" name="kost_id" id="kost" value="" />
+                                @*@item.room_floor*@
+                            </div>
+                            <div class="col">
+                                @*@item.room_name*@
+
+                            </div>
+                            <div class="col">
+                                @*@item.NAME*@
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal reject-->
+<div class="modal fade" id="reject" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reject</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,91 +5,173 @@
 }
 <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+
+</script>
+<style>
+    .outer {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-gap: 20px;
+        border: 0px solid;
+        padding: 20px;
+    }
+</style>
 <main>
     <div class="row">
         <div class="col-12">
             <div class="card mb-1">
-
                 <div class="card-body px-1 pt-1 pb-1">
-
                     <div id='map' style='width: 1040px; height: 380px; margin: 0 auto;'>
-
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-
-
-
 </main>
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
-@*<center>
 
-        <img src="~/additional-file/images/kosandeket pu.PNG" class="img-fluid" alt="Responsive image" width="900" />
-
-    </center>*@
-<hr />
 <center>
-
     <h3>
         <b>
             AVAILABLE NOW
-
         </b>
     </h3>
-
 </center>
-<div class="container">
+
+<center>
+    <button onclick="GFG_Fun()" class="btn btn-danger">cheapest</button>
+    <button onclick="GFG_Fun2()" class="btn btn-dark"> most expensive </button>
+    <h3 id="demo"></h3>
+</center>
+
+    <div class="row">
+        <div class="col-3">
+            <div class="outer col-sm-3">
+                @foreach (var item in Model)
+                {
+
+                    <div class="child"
+                         data-percentage="@item.kost_price">
+
+
+                        <div class="card" style="width: 13rem;">
+                            <img class="card-img-top" src="~/document/photokost/@item.kost_photo" alt="Card image cap" width="200" height="170">
+                            <div class="card-body">
+                                <center>
+                                    <h5 class="card-title">@item.kost_name</h5>
+                                    <p class="card-text">USD @item.kost_price/Month.</p>
+                                    <a href="@Url.Action("Detail",  new { kost_id = item.kost_id })" class="btn btn-primary">Detail</a>
+                                </center>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+
+            </div>
+
+            </div>
+        </div>
+
+
+
+<br>
+
+
+@*<div class="container">
     <div class="row">
 
         @foreach (var item in Model)
         {
-        <div class="col-3">
-            <div class="card" style="width: 13rem;">
-                <img class="card-img-top" src="~/additional-file/images/kosangandi1.PNG" alt="Card image cap">
-                <div class="card-body">
-                    <center>
-                        <h5 class="card-title">@item.kost_name</h5>
-                        <p class="card-text">RP.@item.kost_price/Bulan.</p>
-                        <a href="@Url.Action("Detail",  new { kost_id = item.kost_id })" class="btn btn-primary">Detail</a>
-                    </center>
+            <div class="col-3">
+                <div class="card" style="width: 13rem;">
+                    <img class="card-img-top" src="~/document/photokost/@item.kost_photo" alt="Card image cap">
+                    <div class="card-body">
+                        <center>
+                            <h5 class="card-title">@item.kost_name</h5>
+                            <p class="card-text">RP.@item.kost_price/Bulan.</p>
+                            <a href="@Url.Action("Detail",  new { kost_id = item.kost_id })" class="btn btn-primary">Detail</a>
+                        </center>
+                    </div>
                 </div>
             </div>
-        </div>
-                }
-            </div>
-        </div>
+        }
+    </div>
+</div>*@
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
 
 <script>
+
     mapboxgl.accessToken = 'pk.eyJ1Ijoidmlja3lqbmQiLCJhIjoiY2w5ZjVxNWl6MG5ydjNybXlka3FuY2ZoNCJ9.ZnazGQ7N4dEDKgQxMqYiHA';
     const map = new mapboxgl.Map({
         container: 'map',
         // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-        style: 'mapbox://styles/mapbox/streets-v11',
+        style: 'mapbox://styles/mapbox/satellite-streets-v12',
         center: [107.1704454149077, -6.28508748351949],
         zoom: 15
     });
-   
+
     map.addControl(
         new MapboxDirections({
-            accessToken: mapboxgl.accessToken
+            accessToken: mapboxgl.accessToken,
+            interactive: false
         }),
         'top-left'
         );
-      
-    // Create a new marker.    
-    var arrayMarker = [];
-    @foreach(var item in Model)
-    {
-
-        //arrayMarker.push(marker2);*@
-        <text > const marker2 = new mapboxgl.Marker().setLngLat([@item.kost_location]).setPopup(new mapboxgl.Popup().setHTML("@item.kost_name")).addTo(map);</text>
+    new mapboxgl.Popup({ closeOnClick: false })
+        .setLngLat([107.1704454149077, -6.28508748351949])
+        .setHTML("PU")
+        .addTo(map);
+    // Create a new marker.
+   // Create a new marker.
+var arrayMarker = [];
+@{
+	int i = 0;
+	foreach(var item in Model)
+	{
+        if(item.kost_long != "")
+                {
+		<text>
+    arrayMarker[@i] = new mapboxgl.Marker()
+        .setLngLat([@item.kost_long, @item.kost_lat])
+        .setPopup(new mapboxgl.Popup({ closeOnClick: false })
+            .setHTML('<a href="Detail?kost_id= @item.kost_id"> @item.kost_name</a>'))
+        .addTo(map);
+		</text>
+            i++;
+        }
     }
-
+}
 
 </script>
+<script>
+    var down = document.getElementById('geeks');
 
+    // Main function
+    function GFG_Fun() {
+        var $wrap = $('.outer');
+        $wrap.find('.child').sort(function (a, b) {
+            return + a.getAttribute('data-percentage') -
+                +b.getAttribute('data-percentage');
+        })
+            .appendTo($wrap);
+        down.innerHTML = "Elements sorted";
+    }
+</script>
+<script>
+    var down = document.getElementById('geeks');
+
+    // Main function
+    function GFG_Fun2() {
+        var $wrap = $('.outer');
+        $wrap.find('.child').sort(function (b, a) {
+            return + a.getAttribute('data-percentage') -
+                +b.getAttribute('data-percentage');
+        })
+            .appendTo($wrap);
+        down.innerHTML = "Elements sorted";
+    }
+</script>
