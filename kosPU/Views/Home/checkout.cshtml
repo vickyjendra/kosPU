@@ -144,19 +144,22 @@
 
 
                             <td>
-                               
-                                    @if (data.pay_status == "waiting")
-                                    {
-                                        <button type="button" class="btn btn-warning">
-                                            Waiting
-                                        </button>
-                                    }
-                                    @if (data.pay_status == "approve")
-                                    {
-                                        <button type="button" class="btn btn-success">Approved</button>
-                                    }
-                                
 
+                                @if (data.pay_status == "waiting")
+                                {
+                                    <button type="button" class="btn btn-warning">
+                                        Waiting
+                                    </button>
+                                }
+                                @if (data.pay_status == "approve")
+                                {
+                                    <button type="button" class="btn btn-success">Approved</button>
+                                }
+
+                                @if (data.pay_status == "reject")
+                                {
+                                    <button type="button" class="btn btn-danger">Reject</button>
+                                }
                             </td>
 
                         </tr>

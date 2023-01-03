@@ -616,7 +616,7 @@ namespace kosPU.Controllers
             SqlCommand sqlcomm = new SqlCommand(query, sqlconn);
             sqlconn.Open();
             sqlcomm.Parameters.AddWithValue("@last_up_by", username);
-            sqlcomm.Parameters.AddWithValue("pay_status", "approve");
+            sqlcomm.Parameters.AddWithValue("@pay_status", "approve");
             sqlcomm.Parameters.AddWithValue("@payment_id", payment);
             sqlcomm.ExecuteNonQuery();
             TempData["messsage"] = "succes";
@@ -651,7 +651,70 @@ namespace kosPU.Controllers
           
             return Redirect("request");
         }
-       
+
+
+        [HttpPost]
+        public ActionResult reject(FormCollection form)
+        {
+            if (Session["us_usrname"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            var username = Session["us_usrname"];
+            var room_id = form["room_id"];
+            int room = int.Parse(room_id);
+            var payment_id = form["payment_id"];
+            int payment = int.Parse(payment_id);
+
+            var connectionString = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection myConnection = new SqlConnection();
+            myConnection.ConnectionString = connectionString;
+            myConnection.Open();
+            //
+            string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection sqlconn = new SqlConnection(mainconn);
+
+            string query = "update paymentid set last_update = CURRENT_TIMESTAMP, last_up_by = @last_up_by," +
+                " pay_status = @pay_status where payment_id = @payment_id";
+
+            SqlCommand sqlcomm = new SqlCommand(query, sqlconn);
+            sqlconn.Open();
+            sqlcomm.Parameters.AddWithValue("@last_up_by", username);
+            sqlcomm.Parameters.AddWithValue("@pay_status", "reject");
+            sqlcomm.Parameters.AddWithValue("@payment_id", payment);
+            sqlcomm.ExecuteNonQuery();
+            TempData["messsage"] = "succes";
+            sqlconn.Close();
+            //
+            string query1 = @"update roomid set room_status = @room_status where room_id = @room_id";
+
+            SqlCommand sqlcomm1 = new SqlCommand(query1, sqlconn);
+            sqlconn.Open();
+            sqlcomm1.Parameters.AddWithValue("@room_status", "nothing");
+            sqlcomm1.Parameters.AddWithValue("@room_id", room);
+
+            sqlcomm1.ExecuteNonQuery();
+            TempData["messsage"] = "succes";
+            sqlconn.Close();
+            //
+            var kos = form["kost_id"];
+            int kost_id = int.Parse(kos);
+            string user = form["username"];
+            string query2 = @"delete from booking where kost_id = @kost_id and booking_usr = @username_user";
+
+            SqlCommand sqlcomm2 = new SqlCommand(query2, sqlconn);
+            sqlconn.Open();
+            sqlcomm2.Parameters.AddWithValue("@kost_id", kost_id);
+            sqlcomm2.Parameters.AddWithValue("@username_user", user);
+
+            sqlcomm2.ExecuteNonQuery();
+            TempData["messsage"] = "succes";
+            sqlconn.Close();
+
+            myConnection.Close();
+
+            return Redirect("request");
+        }
     }
 
 }

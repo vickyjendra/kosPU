@@ -94,16 +94,12 @@
                                 @if (item.pay_status == "waiting")
                                 {
                                     <a data-bs-toggle="modal" data-bs-dismiss="modal" data-payment="@item.payment_id" data-room="@item.room_id" data-type="@item.pay_usr" data-kost="@item.kost_id" title="Add this item" class="open-approve btn btn-success btn-sm" href="#approve">Approve</a>
-                                    @*<a data-bs-toggle="modal" data-id="@item.room_id" data-content="@item.payment_id" data-type="" title="Add this item" class="open-approve btn btn-success btn-sm" href="#approve">Approve</a>*@
-
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reject">
-                                        Reject
-                                    </button>
+                                   
+                                    <a data-bs-toggle="modal" data-bs-dismiss="modal" data-payment="@item.payment_id" data-room="@item.room_id" data-type="@item.pay_usr" data-kost="@item.kost_id" title="Add this item" class="open-approve btn btn-danger btn-sm" href="#reject">Reject</a>
+                                   
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detail">
                                         Detaill
                                     </button>
-
-
                                 }
                                 @if (item.pay_status == "approve")
                                 {
@@ -134,9 +130,21 @@
         // it is unnecessary to have to manually call the modal.
         // $('#addBookDialog').modal('show');
     });
+    //reject
 
-
-
+    $(document).on("click", ".open-reject", function () {
+        var payment = $(this).data('payment');
+        $(".modal-body #payment").val(payment);
+        var room = $(this).data('room');
+        $(".modal-body #room").val(room);
+        var type = $(this).data('type');
+        $(".modal-body #type").val(type);
+        var kost = $(this).data('kost');
+        $(".modal-body #kost").val(kost);
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+    });
 
 
 </script>
@@ -191,17 +199,28 @@
 <div class="modal fade" id="reject" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Reject</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            <form action="/HomeOwner/reject" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reject</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col">
+                        <input type="hidden" name="payment_id" id="payment" value="" />
+
+                    </div>
+                    <div class="col">
+                        <input type="hidden" name="room_id" id="room" value="" />
+                        <input type="text" name="username" id="type" value="" />
+                        <input type="text" name="kost_id" id="kost" value="" />
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                </form>
         </div>
     </div>
 </div>
