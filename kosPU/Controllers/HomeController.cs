@@ -563,7 +563,7 @@ namespace kosPU.Controllers
         }
 
         [HttpPost]
-        public ActionResult paycash(HttpPostedFileBase file, FormCollection form, string subject, string ToMail)
+        public ActionResult paycash(HttpPostedFileBase file, FormCollection form)
         {
             if (Session["us_usrname"] == null)
             {

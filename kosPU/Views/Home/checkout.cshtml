@@ -7,13 +7,12 @@
 <!--<div class="card">
 
     <div class="card-body">-->
+@*<center>
+        <h2>Payment</h2>
+    </center>*@
 
-        @*<center>
-            <h2>Payment</h2>
-        </center>*@
 
-
-    <!--</div>
+<!--</div>
 </div>-->
 <br />
 @foreach (var item in Model)
@@ -40,31 +39,120 @@
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Upload Kwitansi</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <input type="file" class="form-control" name="kwitansi" />
-                                @foreach (var item1 in Model)
-                                {
-                                    if (item1.booking_usr != null)
+                            <form action="/Home/paycash" method="post" enctype="multipart/form-data">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Upload Kwitansi</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="file" class="form-control" name="file" />
+                                    @foreach (var item1 in Model)
                                     {
-                                        <input type="text" name="booking_id" value="@item1.booking_id">
-                                        <input type="text" name="kost_id" value="@item1.kost_id">
-                                    }
+                                        if (item1.booking_usr != null)
+                                        {
+                                            <input type="text" name="booking_id" value="@item1.booking_id">
+                                            <input type="text" name="kost_id" value="@item1.kost_id">
+                                        }
 
-                                }
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
+                                    }
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
 
             </div>
+        </div>
+        <div class="card-body">
+            <h2>Payment</h2>
+            <table id="table_fasilitas" class="table table-hover table-bordered table-borderless">
+                <thead class="thead-dark">
+                    <tr>
+
+                        <th>Sender Name</th>
+                        <th>Rekenning Name</th>
+                        <th>Bank Name</th>
+                        <th>Rekening Number</th>
+                        <th>File</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var data in Model)
+                    {
+                        if (data.sender != null)
+                        {
+
+
+
+                            <tr>
+
+
+
+                                <td>
+                                    <center>
+                                        @data.sender
+                                    </center>
+                                </td>
+                                <td>
+                                    <center>
+                                        @data.norekname
+                                    </center>
+                                </td>
+                                <td>
+                                    <center>
+                                        @data.bank
+                                    </center>
+                                </td>
+                                <td>
+                                    <center>
+                                        @data.norek
+                                    </center>
+                                </td>
+                                <td>
+                                    <center>
+                                        @data.bukti
+                                    </center>
+                                </td>
+
+
+
+
+
+
+                                <td>
+
+                                    @if (data.pay_status == "waiting")
+                                    {
+                                        <button type="button" class="btn btn-warning">
+                                            Waiting
+                                        </button>
+                                    }
+                                    @if (data.pay_status == "approve")
+                                    {
+                                        <button type="button" class="btn btn-success">Approved</button>
+                                    }
+
+                                    @if (data.pay_status == "reject")
+                                    {
+                                        <button type="button" class="btn btn-danger">Reject</button>
+                                    }
+                                </td>
+
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+
+
         </div>
     }
 
@@ -75,179 +163,179 @@
 {
     if (item.method_pay == "Transfer")
     {
-<div class="card">
-    @*<div class="card-header">
-            <center>
-                <h4>Pleace Transfer to :</h4>
-                <h4>1246756</h4>
-                <h4>BCA</h4>
-                <h4>An/ VIKI</h4>
-            </center>
-        </div>*@
-    <div class="card-body">
-        <h2>Payment</h2>
-        <table id="table_fasilitas" class="table table-hover table-bordered table-borderless">
-            <thead class="thead-dark">
-                <tr>
-
-                    <th>Sender Name</th>
-                    <th>Rekenning Name</th>
-                    <th>Bank Name</th>
-                    <th>Rekening Number</th>
-                    <th>File</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-
-
-                @foreach (var data in Model)
-                {
-                    if (data.sender != null)
-                    {
-
-
-
+        <div class="card">
+            @*<div class="card-header">
+                    <center>
+                        <h4>Pleace Transfer to :</h4>
+                        <h4>1246756</h4>
+                        <h4>BCA</h4>
+                        <h4>An/ VIKI</h4>
+                    </center>
+                </div>*@
+            <div class="card-body">
+                <h2>Payment</h2>
+                <table id="table_fasilitas" class="table table-hover table-bordered table-borderless">
+                    <thead class="thead-dark">
                         <tr>
 
-
-
-                            <td>
-                                <center>
-                                    @data.sender
-                                </center>
-                            </td>
-                            <td>
-                                <center>
-                                    @data.norekname
-                                </center>
-                            </td>
-                            <td>
-                                <center>
-                                    @data.bank
-                                </center>
-                            </td>
-                            <td>
-                                <center>
-                                    @data.norek
-                                </center>
-                            </td>
-                            <td>
-                                <center>
-                                    @data.bukti
-                                </center>
-                            </td>
-
-
-
-
-
-
-                            <td>
-
-                                @if (data.pay_status == "waiting")
-                                {
-                                    <button type="button" class="btn btn-warning">
-                                        Waiting
-                                    </button>
-                                }
-                                @if (data.pay_status == "approve")
-                                {
-                                    <button type="button" class="btn btn-success">Approved</button>
-                                }
-
-                                @if (data.pay_status == "reject")
-                                {
-                                    <button type="button" class="btn btn-danger">Reject</button>
-                                }
-                            </td>
-
+                            <th>Sender Name</th>
+                            <th>Rekenning Name</th>
+                            <th>Bank Name</th>
+                            <th>Rekening Number</th>
+                            <th>File</th>
+                            <th>Action</th>
                         </tr>
-                    }
-                }
-
-            </tbody>
-        </table>
-
-        
-    </div>
-    <div class="card-body">
-        <h2>History</h2>
-        <table id="table_fasilitas" class="table table-hover table-bordered table-borderless">
-            <thead class="thead-dark">
-                <tr>
-
-                    <th>Sender Name</th>
-                    <th>Rekenning Name</th>
-                    <th>Bank Name</th>
-                    <th>Rekening Number</th>
-                    <th>File</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
+                    </thead>
+                    <tbody>
 
 
-                @foreach (var data in Model)
-                {
-                    if (data.sender != null)
-                    {
+                        @foreach (var data in Model)
+                        {
+                            if (data.sender != null)
+                            {
 
 
 
+                                <tr>
+
+
+
+                                    <td>
+                                        <center>
+                                            @data.sender
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            @data.norekname
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            @data.bank
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            @data.norek
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            @data.bukti
+                                        </center>
+                                    </td>
+
+
+
+
+
+
+                                    <td>
+
+                                        @if (data.pay_status == "waiting")
+                                        {
+                                            <button type="button" class="btn btn-warning">
+                                                Waiting
+                                            </button>
+                                        }
+                                        @if (data.pay_status == "approve")
+                                        {
+                                            <button type="button" class="btn btn-success">Approved</button>
+                                        }
+
+                                        @if (data.pay_status == "reject")
+                                        {
+                                            <button type="button" class="btn btn-danger">Reject</button>
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+
+
+            </div>
+            <div class="card-body">
+                <h2>History</h2>
+                <table id="table_fasilitas" class="table table-hover table-bordered table-borderless">
+                    <thead class="thead-dark">
                         <tr>
 
-
-
-                            <td>
-                                <center>
-                                    @data.sender
-                                </center>
-                            </td>
-                            <td>
-                                <center>
-                                    @data.norekname
-                                </center>
-                            </td>
-                            <td>
-                                <center>
-                                    @data.bank
-                                </center>
-                            </td>
-                            <td>
-                                <center>
-                                    @data.norek
-                                </center>
-                            </td>
-                            <td>
-                                <center>
-                                    @data.bukti
-                                </center>
-                            </td>
-
-
-
-
-
-
-                            <td>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    Download
-                                </button>
-                               
-
-                            </td>
-
+                            <th>Sender Name</th>
+                            <th>Rekenning Name</th>
+                            <th>Bank Name</th>
+                            <th>Rekening Number</th>
+                            <th>File</th>
+                            <th>Action</th>
                         </tr>
-                    }
-                }
-
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
 
 
-    </div>
-</div>
+                        @foreach (var data in Model)
+                        {
+                            if (data.sender != null)
+                            {
+
+
+
+                                <tr>
+
+
+
+                                    <td>
+                                        <center>
+                                            @data.sender
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            @data.norekname
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            @data.bank
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            @data.norek
+                                        </center>
+                                    </td>
+                                    <td>
+                                        <center>
+                                            @data.bukti
+                                        </center>
+                                    </td>
+
+
+
+
+
+
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                            Download
+                                        </button>
+
+
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
     }
 }
 
