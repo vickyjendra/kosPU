@@ -715,6 +715,66 @@ namespace kosPU.Controllers
 
             return Redirect("request");
         }
+        [HttpPost]
+        public ActionResult end(FormCollection form)
+        {
+            if (Session["us_usrname"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            var username = Session["us_usrname"];
+            var kost_id = form["kost_id"];
+            var room_id = form["room_id"];
+            string userpay = form["userpay"];
+            var pay_id = form["pay_id"];
+
+            string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection sqlconn = new SqlConnection(mainconn);
+
+            string query = "update paymentid set last_update = CURRENT_TIMESTAMP, last_up_by = @last_up_by," +
+                " pay_status = @pay_status where payment_id = @payment_id";
+            SqlCommand sqlcomm = new SqlCommand(query, sqlconn);
+            sqlconn.Open();
+            sqlcomm.Parameters.AddWithValue("@last_up_by", username);
+            sqlcomm.Parameters.AddWithValue("@pay_status", "end");
+            sqlcomm.Parameters.AddWithValue("@payment_id", pay_id);
+            sqlcomm.ExecuteNonQuery();
+            TempData["messsage"] = "succes";
+            sqlconn.Close();
+            //
+            string query1 = @"update roomid set room_status = @room_status where room_id = @room_id";
+
+            SqlCommand sqlcomm1 = new SqlCommand(query1, sqlconn);
+            sqlconn.Open();
+            sqlcomm1.Parameters.AddWithValue("@room_status", "nothing");
+            sqlcomm1.Parameters.AddWithValue("@room_id", room_id);
+
+            sqlcomm1.ExecuteNonQuery();
+            TempData["messsage"] = "succes";
+            sqlconn.Close();
+            //
+            string query2 = @"delete from booking where kost_id = @kost_id and booking_usr = @username_user";
+           
+            SqlCommand sqlcomm2 = new SqlCommand(query2, sqlconn);
+            sqlconn.Open();
+            sqlcomm2.Parameters.AddWithValue("@kost_id", kost_id);
+            sqlcomm2.Parameters.AddWithValue("@username_user", userpay);
+
+            sqlcomm2.ExecuteNonQuery();
+            TempData["messsage"] = "succes";
+            sqlconn.Close();
+            //
+            string query3 = "update  account_user set kost_id = null where username_user = @username_user";
+            SqlCommand sqlcomm3 = new SqlCommand(query3, sqlconn);
+            sqlconn.Open();
+            sqlcomm3.Parameters.AddWithValue("@kost_id", kost_id);
+            sqlcomm3.Parameters.AddWithValue("@username_user", userpay);
+
+            sqlcomm3.ExecuteNonQuery();
+            TempData["messsage"] = "succes";
+            sqlconn.Close();
+            return Redirect("booked");
+        }
     }
 
 }
