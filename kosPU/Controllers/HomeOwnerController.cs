@@ -54,6 +54,11 @@ namespace kosPU.Controllers
                     koss.kost_long = dr["kost_long"].ToString();
                     koss.kost_lat = dr["kost_lat"].ToString();
                     koss.kost_photo = dr["kost_photo"].ToString();
+                    koss.kost_norek = dr["kost_norek"].ToString();
+                    koss.kost_notelp = dr["kost_notelp"].ToString();
+                    koss.kost_bank = dr["kost_bank"].ToString();
+                    koss.kost_kostname = dr["kost_kostname"].ToString();
+                    
                     kos.Add(koss);
                 }
             }
@@ -70,10 +75,10 @@ namespace kosPU.Controllers
             List<kosan> kos = new List<kosan>();
             string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
             SqlConnection sqlconn = new SqlConnection(mainconn);
-            string query1 = "select sender, bank, norek, bukti, periode, total_book, pay_status, kosanid.kost_name, NAME, kost_name, START, periode, kost_price, kosanid.kost_id, room_id, room_floor, room_name, room_status, NAME, payment_id, pay_usr from paymentid " +
+            string query1 = "select sender, bank, norek, bukti, periode, total_book, pay_status, NOTELP , kosanid.kost_name, NAME, kost_name, START, periode, kost_price, kosanid.kost_id, room_id, room_floor, room_name, room_status, NAME, payment_id, pay_usr from paymentid " +
                 "join booking on booking.booking_id = paymentid.booking_id " +
                 "join kosanid on kosanid.kost_id = booking.kost_id " +
-                "join roomid on roomid.kost_id_room = kosanid.kost_id where kosanid.kost_owner = @kost_owner and(room_status = 'waiting')";
+                "join roomid on roomid.kost_id_room = kosanid.kost_id where kosanid.kost_owner = @kost_owner and(pay_status = 'waiting')";
             using (SqlCommand cmd = new SqlCommand(query1, sqlconn))
             {
                 cmd.Parameters.AddWithValue("@kost_owner", owner);
@@ -84,6 +89,7 @@ namespace kosPU.Controllers
                 foreach (DataRow dr in dt.Rows)
                 {
                     kosan koss = new kosan();
+                    koss.NOTELP = dr["NOTELP"].ToString();
                     koss.sender = dr["sender"].ToString();
                     koss.bank = dr["bank"].ToString();
                     koss.norek = dr["norek"].ToString();
@@ -110,6 +116,143 @@ namespace kosPU.Controllers
             return View(kos);
         }
         [HttpPost]
+        public ActionResult editkosan(HttpPostedFileBase file, FormCollection form, int price, int kost_id)
+        {
+            if (Session["us_usrname"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            string name = form["name"];
+            string khusus = form["khusus"];
+            string lokasi1 = form["lokasi11"];
+            string lokasi2 = form["lokasi21"];
+            string norek = form["norek"];
+            string rekname = form["rekname"];
+            string Bank = form["Bank"];
+            string contact = form["contact"];
+            string owner = Session["us_usrname"].ToString();
+            var connectionString = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection myConnection = new SqlConnection();
+            myConnection.ConnectionString = connectionString;
+            if (file != null)
+            {
+                string filename = Path.GetFileName(file.FileName);
+                string filepath = Path.Combine(Server.MapPath("~/document/photokost/"), filename);
+                if (file.ContentLength > 0)
+                {
+                    string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+                    SqlConnection sqlconn = new SqlConnection(mainconn);
+                    string query = "update kosanid set kost_name = @kost_name, kost_khusus= @kost_khusus, kost_price = @kost_price, kost_owner = @kost_owner, kost_long = @kost_long, kost_lat = @kost_lat, kost_photo = @kost_photo, kost_norek = @kost_norek, kost_bank = @kost_bank, kost_kostname = @kost_kostname, kost_notelp = @kost_notelp where kost_id = @kost_id";
+
+                    SqlCommand sqlcomm = new SqlCommand(query, sqlconn);
+                    sqlconn.Open();
+                    sqlcomm.Parameters.AddWithValue("@kost_id", kost_id);
+                    sqlcomm.Parameters.AddWithValue("@kost_photo", filename);
+                    sqlcomm.Parameters.AddWithValue("@kost_name", name);
+                    sqlcomm.Parameters.AddWithValue("@kost_khusus", khusus);
+                    sqlcomm.Parameters.AddWithValue("@kost_price", price);
+                    sqlcomm.Parameters.AddWithValue("@kost_owner", owner);
+                    sqlcomm.Parameters.AddWithValue("@kost_long", lokasi1);
+                    sqlcomm.Parameters.AddWithValue("@kost_lat", lokasi2);
+                    sqlcomm.Parameters.AddWithValue("@kost_norek", norek);
+                    sqlcomm.Parameters.AddWithValue("@kost_bank", Bank);
+                    sqlcomm.Parameters.AddWithValue("@kost_kostname", rekname);
+                    sqlcomm.Parameters.AddWithValue("@kost_notelp", contact);
+                    file.SaveAs(filepath);
+                    sqlcomm.ExecuteNonQuery();
+                    sqlconn.Close();
+
+                    myConnection.Close();
+                }
+            }
+            return Redirect("dashboardowner");
+        }
+        [HttpPost]
+        public ActionResult editroom(FormCollection form, int room_id, int kost_id)
+        {
+
+            if (Session["us_usrname"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var connectionString = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection myConnection = new SqlConnection();
+            myConnection.ConnectionString = connectionString;
+            myConnection.Open();
+            string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection sqlconn = new SqlConnection(mainconn);
+            string floor = form["floor"];
+            string roomname = form["roomname"];
+          
+                string query = @"update roomid set room_floor =@room_floor, room_name = @room_name where room_id = @room_id";
+
+                SqlCommand sqlcomm = new SqlCommand(query, sqlconn);
+                sqlconn.Open();
+                sqlcomm.Parameters.AddWithValue("@room_floor", floor);
+                sqlcomm.Parameters.AddWithValue("@room_name", roomname);
+            sqlcomm.Parameters.AddWithValue("@room_id", room_id);
+                
+                sqlcomm.ExecuteNonQuery();
+                TempData["messsage"] = "succes";
+                sqlconn.Close();
+            
+            myConnection.Close();
+            var balik = "DetailPenghuni?kost_id=" + kost_id;
+            return Redirect(balik);
+        }
+        [HttpPost]
+        public ActionResult deleteroom (int kost_id, int room_id)
+        {
+            if (Session["us_usrname"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            var connectionString = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection myConnection = new SqlConnection();
+            myConnection.ConnectionString = connectionString;
+
+            string query = @" delete roomid where room_id = @room_id";
+            using (SqlCommand cmd = new SqlCommand(query, myConnection))
+            {
+                myConnection.Open();
+                cmd.Parameters.AddWithValue("@room_id", room_id);
+
+
+                cmd.ExecuteNonQuery();
+                myConnection.Close();
+
+
+            }
+            var balik = "DetailPenghuni?kost_id=" + kost_id;
+            return Redirect(balik);
+        }
+        [HttpPost]
+        public ActionResult deletekosan (int kost_id)
+        {
+            if (Session["us_usrname"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            var connectionString = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection myConnection = new SqlConnection();
+            myConnection.ConnectionString = connectionString;
+        
+            string query = @" delete kosanid where kost_id = @kost_id";
+            using (SqlCommand cmd = new SqlCommand(query, myConnection))
+            {
+                myConnection.Open();
+                cmd.Parameters.AddWithValue("@kost_id", kost_id);
+
+
+                cmd.ExecuteNonQuery();
+                myConnection.Close();
+
+
+            }
+            return Redirect("dashboardowner");
+        }
+        [HttpPost]
         public ActionResult inputkosan(HttpPostedFileBase file, FormCollection form, int price)
         {
             if (Session["us_usrname"] == null)
@@ -125,7 +268,7 @@ namespace kosPU.Controllers
             string Bank = form["Bank"];
             string contact = form["contact"];
             string owner = Session["us_usrname"].ToString();     
-;            var connectionString = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
             SqlConnection myConnection = new SqlConnection();
             myConnection.ConnectionString = connectionString;
             myConnection.Open();
@@ -223,9 +366,11 @@ namespace kosPU.Controllers
                 foreach (DataRow dr in dt.Rows)
                 {
                     detailowner detailo = new detailowner();
+                    detailo.room_id = (int)dr["room_id"];
                     detailo.room_name = dr["room_name"].ToString();
                     detailo.room_floor = dr["room_floor"].ToString();
                     detailo.kost_id_room = (int)dr["kost_id_room"];
+                    detailo.room_status = dr["room_status"].ToString();
                     detail.Add(detailo);
                 }
             }
@@ -240,6 +385,7 @@ namespace kosPU.Controllers
                 foreach (DataRow dr in dt.Rows)
                 {
                     detailowner detailo = new detailowner();
+                    detailo.benefit_id = (int)dr["benefit_id"];
                     detailo.ben_keep = dr["ben_keep"].ToString();
                     detailo.ben_free = dr["ben_free"].ToString();
                     detailo.benefit_kost_id = (int)dr["benefit_kost_id"];
@@ -257,6 +403,7 @@ namespace kosPU.Controllers
                 foreach (DataRow dr in dt.Rows)
                 {
                     detailowner detailo = new detailowner();
+                    detailo.spek_id = (int)dr["spek_id"];
                     detailo.spek_size = dr["spek_size"].ToString();
                     detailo.spek_bath = dr["spek_bath"].ToString();
                     detailo.spek_kost_id = (int)dr["spek_kost_id"];
@@ -274,6 +421,7 @@ namespace kosPU.Controllers
                 foreach (DataRow dr in dt.Rows)
                 {
                     detailowner detailo = new detailowner();
+                    detailo.fac_id = (int)dr["fac_id"];
                     detailo.AC = dr["AC"].ToString();
                     detailo.BED = dr["BED"].ToString();
                     detailo.cupboard = dr["cupboard"].ToString();
@@ -284,6 +432,61 @@ namespace kosPU.Controllers
                     detailo.chair = dr["chair"].ToString();
                     detailo.TV = dr["TV"].ToString();
                     detailo.fac_kost_id = (int)dr["fac_kost_id"];
+                    detail.Add(detailo);
+                }
+            }
+            //total room
+            string username = Session["us_usrname"].ToString();
+
+            string query5 = "select COUNT(room_name) as totalroom from kosanid join roomid on kosanid.kost_id = roomid.kost_id_room where kost_owner = @kost_owner and kosanid.kost_id = @kost_id";
+            using (SqlCommand cmd = new SqlCommand(query5, sqlconn))
+            {
+                cmd.Parameters.AddWithValue("@kost_id", kost_id);
+                cmd.Parameters.AddWithValue("@kost_owner", username);
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    detailowner detailo = new detailowner();
+                    detailo.totalroom = (int)dr["totalroom"];
+                    detail.Add(detailo);
+                }
+            }
+            //total boked
+           
+
+            string query6 = "select COUNT(room_name) as totalboked from kosanid join roomid on kosanid.kost_id = roomid.kost_id_room where kost_owner = @kost_owner and kosanid.kost_id = @kost_id and roomid.room_status = 'booked'";
+            using (SqlCommand cmd = new SqlCommand(query6, sqlconn))
+            {
+                cmd.Parameters.AddWithValue("@kost_id", kost_id);
+                cmd.Parameters.AddWithValue("@kost_owner", username);
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    detailowner detailo = new detailowner();
+                    detailo.totalboked = (int)dr["totalboked"];
+                    detail.Add(detailo);
+                }
+            }
+
+            //total empty
+
+
+            string query7 = "select COUNT(room_name) as totalempty from kosanid join roomid on kosanid.kost_id = roomid.kost_id_room where kost_owner = @kost_owner and kosanid.kost_id = @kost_id and roomid.room_status = 'nothing'";
+            using (SqlCommand cmd = new SqlCommand(query7, sqlconn))
+            {
+                cmd.Parameters.AddWithValue("@kost_id", kost_id);
+                cmd.Parameters.AddWithValue("@kost_owner", username);
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    detailowner detailo = new detailowner();
+                    detailo.totalempty = (int)dr["totalempty"];
                     detail.Add(detailo);
                 }
             }
@@ -375,6 +578,40 @@ namespace kosPU.Controllers
             return Redirect(balik);
         }
         [HttpPost]
+        public ActionResult editbenefit(FormCollection form, int kost_id, int benefit_id)
+        {
+            if (Session["us_usrname"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var connectionString = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection myConnection = new SqlConnection();
+            myConnection.ConnectionString = connectionString;
+            myConnection.Open();
+            string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection sqlconn = new SqlConnection(mainconn);
+            string penjaga = form["penjaga"];
+            string admin = form["admin"];
+
+
+            string query = @"update benefitid set ben_keep = @ben_keep, ben_free = @ben_free where benefit_id =@benefit_id";
+
+            SqlCommand sqlcomm = new SqlCommand(query, sqlconn);
+            sqlconn.Open();
+
+            sqlcomm.Parameters.AddWithValue("@ben_keep", penjaga);
+            sqlcomm.Parameters.AddWithValue("@benefit_id", benefit_id);
+            sqlcomm.Parameters.AddWithValue("@ben_free", admin);
+
+            sqlcomm.ExecuteNonQuery();
+            TempData["messsage"] = "succes";
+            sqlconn.Close();
+            myConnection.Close();
+            var balik = "DetailPenghuni?kost_id=" + kost_id;
+            return Redirect(balik);
+        }
+        [HttpPost]
         public ActionResult Addbenefit(FormCollection form, int kost_id)
         {
             if (Session["us_usrname"] == null)
@@ -409,7 +646,43 @@ namespace kosPU.Controllers
             var balik = "DetailPenghuni?kost_id=" + kost_id;
             return Redirect(balik);
         }
+        
+       
         //add spek
+        [HttpPost]
+        public ActionResult editSpek (FormCollection form, int kost_id, int spek_id)
+        {
+            if (Session["us_usrname"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var connectionString = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection myConnection = new SqlConnection();
+            myConnection.ConnectionString = connectionString;
+            myConnection.Open();
+            string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection sqlconn = new SqlConnection(mainconn);
+            string size = form["size"];
+            string bathroom = form["bathroom"];
+
+
+            string query = @"update spesicationid set spek_size = @spek_size, spek_bath = @spek_bath where spek_id =@spek_id";
+
+            SqlCommand sqlcomm = new SqlCommand(query, sqlconn);
+            sqlconn.Open();
+
+            sqlcomm.Parameters.AddWithValue("@spek_size", size);
+            sqlcomm.Parameters.AddWithValue("@spek_id", spek_id);
+            sqlcomm.Parameters.AddWithValue("@spek_bath", bathroom);
+
+            sqlcomm.ExecuteNonQuery();
+            TempData["messsage"] = "succes";
+            sqlconn.Close();
+            myConnection.Close();
+            var balik = "DetailPenghuni?kost_id=" + kost_id;
+            return Redirect(balik);
+        }
         [HttpPost]
         public ActionResult AddSpek(FormCollection form, int kost_id)
         {
@@ -437,6 +710,50 @@ namespace kosPU.Controllers
             sqlcomm.Parameters.AddWithValue("@spek_size", size);
             sqlcomm.Parameters.AddWithValue("@spek_kost_id", kost_id);
             sqlcomm.Parameters.AddWithValue("@spek_bath", bathroom);
+
+            sqlcomm.ExecuteNonQuery();
+            TempData["messsage"] = "succes";
+            sqlconn.Close();
+            myConnection.Close();
+            var balik = "DetailPenghuni?kost_id=" + kost_id;
+            return Redirect(balik);
+        }
+        [HttpPost]
+        public ActionResult Editfasilitas (FormCollection form, int kost_id, int fac_id)
+        {
+            if (Session["us_usrname"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            var connectionString = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection myConnection = new SqlConnection();
+            myConnection.ConnectionString = connectionString;
+            myConnection.Open();
+            string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
+            SqlConnection sqlconn = new SqlConnection(mainconn);
+            string bed = form["bed"];
+            string cup = form["cup"];
+            string wash = form["wash"];
+            string table = form["table"];
+            string kulkas = form["kulkas"];
+            string Wifi = form["Wifi"];
+            string Chair = form["Chair"];
+            string TV = form["TV"];
+            string AC = form["AC"];
+            string query = @"update facid set AC = @AC, BED = @BED, cupboard =@cupboard, washing = @washing, tabble =@tabble, regni =@regni, wifi = @wifi, chair = @chair, TV = @TV where fac_id =@fac_id";
+            SqlCommand sqlcomm = new SqlCommand(query, sqlconn);
+            sqlconn.Open();
+            sqlcomm.Parameters.AddWithValue("@fac_id", fac_id);
+            sqlcomm.Parameters.AddWithValue("@AC", AC);
+            
+            sqlcomm.Parameters.AddWithValue("@BED", bed);
+            sqlcomm.Parameters.AddWithValue("@cupboard", cup);
+            sqlcomm.Parameters.AddWithValue("@washing", wash);
+            sqlcomm.Parameters.AddWithValue("@tabble", table);
+            sqlcomm.Parameters.AddWithValue("@regni", kulkas);
+            sqlcomm.Parameters.AddWithValue("@wifi", Wifi);
+            sqlcomm.Parameters.AddWithValue("@chair", Chair);
+            sqlcomm.Parameters.AddWithValue("@TV", TV);
 
             sqlcomm.ExecuteNonQuery();
             TempData["messsage"] = "succes";
@@ -500,6 +817,11 @@ namespace kosPU.Controllers
             List<kosan> kos = new List<kosan>();
             string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
             SqlConnection sqlconn = new SqlConnection(mainconn);
+            //string query1 = "select paymentid.sender, paymentid.pay_status, booking.NAME, " +
+            //    "booking.method_pay, bukti, norek, bank, periode, total_book, payment_id, room_id, room_floor, room_name from paymentid " +
+            //    "join booking on booking.booking_id = paymentid.payment_id " +
+            //    "join kosanid on kosanid.kost_id = booking.kost_id " +
+            //    "join roomid on roomid.kost_id_room = kosanid.kost_id where kosanid.kost_owner = @kost_owner";
             string query1 = "select sender, bank, norek, bukti, periode, total_book, pay_status, kosanid.kost_name, kost_price," +
                 " kosanid.kost_id, room_id, room_floor, room_name, room_status, NAME, payment_id, pay_usr from paymentid " +
                 "join booking on booking.booking_id = paymentid.booking_id " +

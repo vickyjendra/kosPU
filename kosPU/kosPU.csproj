@@ -176,6 +176,7 @@
     <Compile Include="Models\LoginViewModelowner.cs" />
     <Compile Include="Models\myaccount.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="selectroom\db.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="additional-file\css\css.css" />
@@ -183,6 +184,7 @@
     <Content Include="additional-file\datatabe\jquery.dataTables.min.css" />
     <Content Include="additional-file\datatabe\jquery.dataTables.min.js" />
     <Content Include="additional-file\datatabe\scroll.css" />
+    <Content Include="additional-file\dselect.js" />
     <Content Include="additional-file\images\air-conditioner.png" />
     <Content Include="additional-file\images\barbieLogo.png" />
     <Content Include="additional-file\images\barbie_logo_1.png" />
@@ -670,6 +672,7 @@
     <Content Include="Models\account1.edmx.diagram">
       <DependentUpon>account1.edmx</DependentUpon>
     </Content>
+    <Content Include="additional-file\dselect.scss" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -7,6 +7,7 @@
 <h2>history</h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class="card">
+    <h2 class="text-center">History</h2>
     <table id="table_id" class="class=" table table-hover table-borderless">
         <thead>
             <tr class="thead-dark">
@@ -93,21 +94,18 @@
                         </td>
                         <td>
                             <center>
-                                @if (item.pay_status == "waiting")
+                                @if (item.pay_status == "reject")
                                 {
                                     <a data-bs-toggle="modal" data-bs-dismiss="modal" data-payment="@item.payment_id" data-room="@item.room_id" data-type="@item.pay_usr" data-kost="@item.kost_id" title="Add this item" class="open-approve btn btn-success btn-sm" href="#approve">Approve</a>
                                     @*<a data-bs-toggle="modal" data-id="@item.room_id" data-content="@item.payment_id" data-type="" title="Add this item" class="open-approve btn btn-success btn-sm" href="#approve">Approve</a>*@
 
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reject">
-                                        Reject
                                     </button>
 
                                 }
                                 @if (item.pay_status == "approve")
                                 {
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#reject">
-                                        Reject
-                                    </button>
+                                    <a data-bs-toggle="modal" data-bs-dismiss="modal" data-payment="@item.payment_id" data-room="@item.room_id" data-type="@item.pay_usr" data-kost="@item.kost_id" title="Add this item" class="open-reject btn btn-danger btn-sm" href="#reject">Reject</a>
                                 }
                             </center>
                         </td>
@@ -133,7 +131,19 @@
         // $('#addBookDialog').modal('show');
     });
 
-
+    $(document).on("click", ".open-reject", function () {
+        var payment = $(this).data('payment');
+        $(".modal-body #payment").val(payment);
+        var room = $(this).data('room');
+        $(".modal-body #room").val(room);
+        var type = $(this).data('type');
+        $(".modal-body #type").val(type);
+        var kost = $(this).data('kost');
+        $(".modal-body #kost").val(kost);
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+    });
 
 
 
@@ -189,17 +199,29 @@
 <div class="modal fade" id="reject" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Reject</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            <form action="/HomeOwner/reject" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reject</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col">
+                        <input type="hidden" name="payment_id" id="payment" value="" />
+
+                    </div>
+                    <div class="col">
+                        <input type="hidden" name="room_id" id="room" value="" />
+                        <input type="text" name="username" class="form-control" id="type" value="" />
+                        <input type="hidden" name="kost_id" id="kost" value="" />
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+<!-- Modal detail-->

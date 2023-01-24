@@ -7,6 +7,7 @@
 <h2>booked</h2>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class="card">
+    <h2 class="text-center">Booking</h2>
     <table id="table_id" class="class=" table table-hover table-borderless">
         <thead>
             <tr class="thead-dark">
@@ -121,10 +122,13 @@
                         </td>
                         <td>
                             <center>
-                                <button type="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="@item.kost_id" data-room ="@item.room_id" data-userpay="@item.pay_usr" data-payid="@item.payment_id" title="Add this item" class="open-end btn btn-warning btn-sm" href="#end">
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="@item.kost_id" data-room="@item.room_id" data-userpay="@item.pay_usr" data-payid="@item.payment_id" title="Add this item" class="open-end btn btn-warning btn-sm" href="#end">
                                     End/Finish
                                 </button>
                             </center>
+                            @*<button type="button" data-NAME="@item.NAME" data-kostname="@item.kost_name" data-room="@item.room_floor" data-roomname="@item.room_name" data-start="@item.START.Value.ToShortDateString()" data-periode="@item.periode" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detail">
+                                Detaill
+                            </button>*@
                         </td>
 
                     </tr>
@@ -132,6 +136,25 @@
             }
         </tbody>
     </table>
+    <script>
+        $(document).on("click", ".detail", function () {
+            var NAME = $(this).data('NAME');
+            $(".modal-body #NAME").val(NAME);
+            var room = $(this).data('room');
+            $(".modal-body #room").val(room);
+            var kostname = $(this).data('kostname');
+            $(".modal-body #kostname").val(kostname);
+            var roomname = $(this).data('roomname');
+            $(".modal-body #roomname").val(roomname);
+            var star = $(this).data('star');
+            $(".modal-body #star").val(star);
+            var periode = $(this).data('periode');
+            $(".modal-body #periode").val(periode);
+            // As pointed out in comments,
+            // it is unnecessary to have to manually call the modal.
+            // $('#addBookDialog').modal('show');
+        });
+    </script>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -141,16 +164,16 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" id="id" name="kost_id"/>
-                        <input type="hidden" id="room" name="room_id"/>
-                        <input type="hidden" id="userpay" name="userpay"/>
+                        <input type="hidden" id="id" name="kost_id" />
+                        <input type="hidden" id="room" name="room_id" />
+                        <input type="hidden" id="userpay" name="userpay" />
                         <input type="hidden" id="payid" name="pay_id" />
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
-                 </form>
+                </form>
             </div>
         </div>
     </div>
@@ -169,11 +192,6 @@
         // it is unnecessary to have to manually call the modal.
         // $('#addBookDialog').modal('show');
     });
-
-
-
-
-
 </script>
 <!-- Modal approve-->
 <div class="modal fade" id="approve" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -236,6 +254,46 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal detail-->
+<div class="modal fade" id="detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Detail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               
+
+                    <label>Resident Name</label>
+                    <input type="text" class="form-control" id="NAME" value="" readonly>
+
+
+                    <label>Boarding Room Name</label>
+                    <input type="text" class="form-control" id="room" value="" readonly>
+
+                    <label>Flour Number</label>
+                    <input type="text" class="form-control" id="kostname" value="" readonly>
+
+                    <label>Room Name</label>
+                    <input type="text" class="form-control" id="roomname" value="" readonly>
+
+                    <label>Start At</label>
+                    <input type="text" class="form-control" id="star" value="" readonly>
+
+                    <label>Periode</label>
+                    <input type="text" class="form-control" id="periode" value="" readonly>
+
+
+
+              
+            </div>
+            <div class="modal-footer">
+
             </div>
         </div>
     </div>

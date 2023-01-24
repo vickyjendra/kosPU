@@ -3,6 +3,10 @@
     ViewBag.Title = "Boking";
     Layout = "~/Views/Shared/View1.cshtml";
 }
+
+<script src="~/additional-file/dselect.js"></script>
+<link rel="stylesheet" href="~/additional-file/dselect.scss" />
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <div class="card">
 
     <div class="card-body">
@@ -26,20 +30,20 @@
             <div class="container text-center">
                 <div class="row">
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="Nama Perwakilan" name="name">
+                        <input type="text" class="form-control" placeholder="Representative Name" name="name">
 
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" placeholder="Nomor Telfon" name="telp">
+                        <input type="number" class="form-control" placeholder="Telp Number" name="telp">
                     </div>
 
                 </div>
                 <br />
                 <div class="row">
                     <div class="col">
-                       
-          
-                        <input type="text" class="form-control" placeholder="Email" name="email">
+
+
+                        <input type="email" class="form-control" placeholder="Email" name="email">
                     </div>
                     <div class="col">
                         <input type="text" class="form-control" placeholder="Major ex*(IT 2019)" name="major">
@@ -57,38 +61,25 @@
                 <div class="row">
                     <div class="col">
 
-                        <select class="form-control" aria-label="Default select example" name="floor">
+
+                        <select class="form-control" aria-label="Default select example" name="floor" id="floor">
                             <option selected>Floor</option>
                             @foreach (var item in Model)
                             {
                                 if (item.room_floor != null)
-                                {  
-                                    
-                                    <option value="@item.room_floor">@item.room_floor</option>
+                                {
+
+                                    <option value="@item.kost_id_room">@item.room_floor</option>
                                 }
-
-
                             }
-
-
-
                         </select>
                     </div>
                     <div class="col">
-                        <select class="form-control" aria-label="Default select example" name="room">
+                        <select class="form-control" aria-label="Default select example" name="room" id="room">
                             <option selected>Number Room</option>
-                            @foreach (var item in Model)
-                            {
-                                if (item.room_name != null)
-                                {
-                                   
-                                        <option value="@item.room_name">@item.room_name</option>
-                                    
-
-                                }
 
 
-                            }
+
 
 
                         </select>
@@ -167,3 +158,32 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+     $(document).ready(function () {
+        //Dropdownlist Selectedchange event
+        $("#floor").change(function () {
+            $("#room").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("State_Bind")', // we are calling json method
+                dataType:'json',
+                data: { kost_id: $("#floor").val() },
+               // here we are get value of selected country and passing same value
+                  /*as inputto json method GetStates.*/
+                success: function (states) {
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+                    $.each(states, function (i, state) {
+                        $("#room").append('<option value="' + state.room_name + '">' +
+                         state.room_name + '</option>');
+                    // here we are adding option for States
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+            return false;
+        })
+         });
+</script>

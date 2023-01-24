@@ -51,6 +51,8 @@ namespace kosPU.Controllers
                 kos.kost_photo = dr["kost_photo"].ToString();
                 koss.Add(kos);
             }
+
+           
             return View(koss);
         }
 
@@ -280,14 +282,15 @@ namespace kosPU.Controllers
             int total = harga * per;
             int kosid = int.Parse(kost_id);
             var username = Session["us_usrname"];
-            SqlCommand checktoyprd = new SqlCommand("select * from booking where kost_id = '" + kost_id + "'  AND booking_usr = '" + username + "'", myConnection);
+            SqlCommand checktoyprd = new SqlCommand("select * from booking where booking_usr = '" + username + "'", myConnection);
             SqlDataAdapter sdprd = new SqlDataAdapter(checktoyprd);
             DataTable dtprd = new DataTable();
             sdprd.Fill(dtprd);
             if (dtprd.Rows.Count > 0)
             {
                 TempData["alreadybooked"] = "already booked";
-
+                var balikk = "Boking?kost_id=" + kost_id;
+                return Redirect(balikk);
             }
             else
             {
@@ -732,6 +735,8 @@ namespace kosPU.Controllers
                     sqlcomm.Parameters.AddWithValue("@pay_usr", username);
                     sqlcomm.Parameters.AddWithValue("@pay_status", "waiting");
                     file.SaveAs(filepath);
+
+                    
                     TempData["AlertMessage"] = "Payment Uploaded Succesfully";
                     sqlcomm.ExecuteNonQuery();
                     //}
@@ -751,7 +756,11 @@ namespace kosPU.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            if(Session["kost_id"] == null)
+            //if (Session["us_usrname"] != Session["us_usrname_secret"])
+            //{
+            //    return RedirectToAction("Login", "Account");
+            //}
+            if (Session["kost_id"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -872,6 +881,29 @@ namespace kosPU.Controllers
                 }
             }
             return View(detail);
+        }
+
+        selectroom.db dblayer = new selectroom.db();
+        public JsonResult State_Bind(string kost_id)
+        {
+
+            DataSet ds = dblayer.Get_TorsoType(kost_id);
+            List<detailowner> detail = new List<detailowner>();
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                detail.Add(new detailowner
+                {
+                    //kost_id = (int)dr["kost_id"],
+                    room_floor = dr["room_floor"].ToString(),
+                    kost_id_room = (int)dr["kost_id_room"],
+                    //sw_charName = Convert.ToString(dr["sw_charName"]),
+                    room_name = dr["room_name"].ToString()
+                    //sw_charID = Convert.ToInt32(dr["sw_charID"]),
+                    //trs_ID = Convert.ToInt32(dr["sw_charID"]),
+                    //trs_name = Convert.ToString(dr["sw_charName"])
+                }); ;
+            }
+            return Json(detail, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult product(FormCollection form)

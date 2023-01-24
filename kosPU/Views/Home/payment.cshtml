@@ -85,10 +85,18 @@ Layout = "~/Views/Shared/View1.cshtml";
                     <h4>Pleace Transfer to :</h4>
                     @foreach (var data in Model)
                     {
+                        if (data.kost_norek != null)
+                        {
+                            <h4>Rekening Number : @data.kost_norek</h4>
+                            <h4>Bank Name : @data.kost_bank</h4>
+                            <h4>Rekening Name : @data.kost_kostname</h4>
+                        }
 
-                        <h4>@data.kost_norek</h4>
-                        <h4>@data.kost_bank</h4>
-                        <h4>@data.kost_kostname</h4>
+                        if (data.total_book != 0)
+                        {
+                            <h4>Total Transfer $ @data.total_book</h4>
+                        }
+
                     }
 
                 </center>

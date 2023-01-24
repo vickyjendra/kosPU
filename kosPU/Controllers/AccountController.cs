@@ -79,7 +79,7 @@ namespace kosPU.Controllers
             if (userExist)
             {
                 Session["us_usrname"] = u.username_owner.ToString();
-                
+                Session["us_usrname_secret"] = u.username_owner.ToString();
                 FormsAuthentication.SetAuthCookie(u.username_owner, false);
 
                 return RedirectToAction("dashboardowner", "HomeOwner");

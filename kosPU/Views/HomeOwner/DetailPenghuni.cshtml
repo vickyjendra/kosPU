@@ -3,6 +3,8 @@
     ViewBag.Title = "DetailPenghuni";
     Layout = "~/Views/Shared/View1owner.cshtml";
 }
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 @foreach (var item in Model)
 {
     if (item.kost_id != 0)
@@ -13,6 +15,64 @@
     }
 
 }
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        <div class="card h-60">
+
+            <div class="card-body">
+                <h5 class="card-title text-center">Total Room</h5>
+                @foreach (var room in Model)
+                {
+                    if (room.totalroom != 0)
+                    {
+                        <h1 class="text-center">@room.totalroom</h1>
+                    }
+
+
+
+                }
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-60">
+
+            <div class="card-body">
+                <h5 class="card-title text-center">Boked</h5>
+                @foreach (var room in Model)
+                {
+                    if (room.totalboked != 0)
+                    {
+                        <h1 class="text-center">@room.totalboked</h1>
+                    }
+                }
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col">
+        <div class="card h-60">
+
+            <div class="card-body">
+                <h5 class="card-title text-center">Empty</h5>
+                @foreach (var room in Model)
+                {
+                    if (room.totalempty != 0)
+                    {
+                        <h1 class="text-center">@room.totalempty</h1>
+                    }
+                }
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<br />
 
 <link href="~/additional-file/datatabe/jquery.dataTables.min.css" rel="stylesheet" />
 <!-- Button trigger modal -->
@@ -98,9 +158,9 @@
     <table id="table_benefit" class="table table-hover table-borderless">
         <thead class="thead-dark">
             <tr>
-                <th>Room Name </th>
-                <th>Floor</th>
-
+                <th class="text-center">Room Name </th>
+                <th class="text-center">Floor</th>
+                <th class="text-center">Status</th>
 
                 <th>Action</th>
             </tr>
@@ -125,10 +185,16 @@
                                 @item.room_floor
                             </center>
                         </td>
+                        <td>
+                            <center>
+                                @item.room_status
+                            </center>
+                        </td>
 
                         <td>
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalbenefitedit" data-whatever="">Edit</button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modaldeletebenefit" data-whatever="">Delete</button>
+                            <a data-bs-toggle="modal" data-kostid="@item.kost_id_room" data-roomid="@item.room_id" data-roomname="@item.room_name" data-roomfloor="@item.room_floor" title="Add this item" class="open-exampleroomedit btn btn-warning" href="#exampleroomedit">Edit</a>
+                            <a data-bs-toggle="modal" data-kostid="@item.kost_id_room" data-roomid="@item.room_id" data-roomname="@item.room_name" data-roomfloor="@item.room_floor" title="Add this item" class="open-exampleroodelete btn btn-danger" href="#exampleroodelete">Delete</a>
+
                         </td>
                     </tr>
                 }
@@ -137,17 +203,78 @@
     </table>
 </div>
 <br />
-<div class="modal fade" id="modalbenefitedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<script>
+    $(document).on("click", ".open-exampleroodelete", function () {
+        var roomid = $(this).data('roomid');
+        $(".modal-body #roomid").val(roomid);
+        var roomname = $(this).data('roomname');
+        $(".modal-body #roomname").val(roomname);
+        var roomfloor = $(this).data('roomfloor');
+        $(".modal-body #roomfloor").val(roomfloor);
+        var kostid = $(this).data('kostid');
+        $(".modal-body #kostid").val(kostid);
+        var bank = $(this).data('bank');
+        $(".modal-body #bank").val(bank);
+        var price = $(this).data('price');
+        $(".modal-body #price").val(price);
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+    });
+</script>
+<div class="modal fade" id="exampleroodelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/HomeOwner/deleteroom" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Room</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="roomid" name="room_id" />
+                    <input type="hidden" id="kostid" name="kost_id" />
+                    <input type="text" class="form-control" id="roomname" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).on("click", ".open-exampleroomedit", function () {
+        var roomid = $(this).data('roomid');
+        $(".modal-body #roomid").val(roomid);
+        var roomname = $(this).data('roomname');
+        $(".modal-body #roomname").val(roomname);
+        var roomfloor = $(this).data('roomfloor');
+        $(".modal-body #roomfloor").val(roomfloor);
+        var kostid = $(this).data('kostid');
+        $(".modal-body #kostid").val(kostid);
+        var bank = $(this).data('bank');
+        $(".modal-body #bank").val(bank);
+        var price = $(this).data('price');
+        $(".modal-body #price").val(price);
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+    });
+</script>
+<!-- Modal -->
+<div class="modal fade" id="exampleroomedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
+            <form action="/HomeOwner/editroom" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Room</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
                     <div class="container">
                         <div class="row">
                             <div class="col">
@@ -156,41 +283,30 @@
                                         Floor
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
+                                        <select class="form-select" aria-label="Default select example" name="floor" id="roomfloor">
                                             <option selected>choose</option>
-                                            <option value="id_kosan">1</option>
-                                            <option value="id_kosan">2</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
                                         </select>
 
                                     </div>
                                 </div>
                                 <br />
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        Room Number
-                                    </div>
-                                    <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>choose</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
 
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
                             <div class="col">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        House keeper
+                                        Room Name
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>choose</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-
-                                        </select>
+                                        <input type="text" class="form-control" name="roomname" id="roomname" />
+                                        <input type="hidden" class="form-control" name="room_id" id="roomid" />
+                                        <input type="hidden" class="form-control" name="kost_id" id="kostid" />
                                     </div>
                                 </div>
 
@@ -199,329 +315,20 @@
 
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="Modaldeletebenefit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Kosan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Yakin ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-            </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
-<div class="card p-2">
-    <div class="card-header pb-0 p-3">
-        <div class="row">
-            <div class="col-6 d-flex align-items-center">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Add Resident
-                </button>
-            </div>
-        </div>
-    </div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <form action="/HomeOwner/Addresident" method="post" enctype="multipart/form-data">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Resident</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
 
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            Resident Name
-                                        </div>
-                                        <div class="col-sm">
-                                            <input type="text" class="form-control" name="resident_name" />
-
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            No.Telp
-                                        </div>
-                                        <div class="col-sm">
-                                            <input type="text" class="form-control" name="notelp" />
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            Jumlah Penghuni
-                                        </div>
-                                        <div class="col-sm">
-                                            <input type="number" class="form-control" name="penghuni" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            Room Name
-                                        </div>
-                                        <div class="col-sm">
-                                            <input type="text" class="form-control" name="roomname" />
-                                        </div>
-                                    </div>
-
-                                    <br />
-                                    <div class="col">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                Start
-                                            </div>
-                                            <div class="col-sm">
-                                                <input type="date" class="form-control" name="start" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <div class="col">
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                End
-                                            </div>
-                                            <div class="col-sm">
-                                                <input type="date" class="form-control" name="end" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @foreach (var data in Model)
-                                    {
-                                        if (data.kost_id != 0)
-                                        {
-                                            <input type="text" value="@data.kost_id" name="kost_id" />
-                                        }
-
-                                    }
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <table id="table_penghuni" class="table table-hover table-borderless">
-        <thead>
-            <tr class="thead-dark">
-                <th>Resident Name</th>
-                <th>No Telfon</th>
-                <th>Room Number</th>
-                <th>Resident Email</th>
-                <th>Start</th>
-                <th>End</th>
-                <th>Action</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                if (item.resident_name != null)
-                {
-
-
-                    <tr>
-                        <td>
-                            <center>
-                                @Html.DisplayFor(modelItem => item.resident_name)
-                            </center>
-                        </td>
-                        <td>
-                            <center>
-                                @Html.DisplayFor(modelItem => item.no_telp)
-                            </center>
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                            <center>
-
-                            </center>
-                        </td>
-                        <td>
-                            <center>
-                                @Html.DisplayFor(modelItem => item.email)
-                            </center>
-                        </td>
-                        <td>
-                            @if (item.start == null)
-                            {
-
-                            }
-                            else
-                            {
-                                @item.start.Value.ToShortDateString()
-                            }
-
-                        </td>
-                        <td>
-                            @if (item.res_end == null)
-                            {
-
-                            }
-                            else
-                            {
-                                @item.res_end.Value.ToShortDateString()
-                            }
-
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModaledit" data-whatever="">Edit</button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModaldelete" data-whatever="">Delete</button>
-
-                        </td>
-
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
-</div>
-<div class="modal fade" id="exampleModaledit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Resident</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        Resident Name
-                                    </div>
-                                    <div class="col-sm">
-                                        <input type="text" class="form-control" />
-
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        No.Telp
-                                    </div>
-                                    <div class="col-sm">
-                                        <input type="text" class="form-control" />
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        number of occupants
-                                    </div>
-                                    <div class="col-sm">
-                                        <input type="number" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        Room Number
-                                    </div>
-                                    <div class="col-sm">
-                                        <input type="text" class="form-control" />
-                                    </div>
-                                </div>
-
-                                <br />
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            Start
-                                        </div>
-                                        <div class="col-sm">
-                                            <input type="date" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            End
-                                        </div>
-                                        <div class="col-sm">
-                                            <input type="date" class="form-control" />
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="exampleModaldelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Kosan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Yakin ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- Button trigger modal modalbenefit -->
+
 <br />
 <div class="card p-2">
     <div class="card-header pb-0 p-3">
@@ -555,11 +362,11 @@
                                     <br />
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            Penjaga Kosan
+                                            House keeper
                                         </div>
                                         <div class="col-sm">
                                             <select class="form-control" name="penjaga">
-                                                <option selected>Pilih</option>
+                                                <option selected>Choose</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
 
@@ -570,11 +377,11 @@
                                 <div class="col">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            free biaya admin
+                                            Admin fee free
                                         </div>
                                         <div class="col-sm">
                                             <select class="form-control" name="admin">
-                                                <option selected>Pilih</option>
+                                                <option selected>Choose</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
 
@@ -628,8 +435,9 @@
                             </center>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalbenefitedit" data-whatever="">Edit</button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modaldeletebenefit" data-whatever="">Delete</button>
+                            <a data-bs-toggle="modal" data-kostid="@item.benefit_kost_id" data-benefit="@item.benefit_id" title="Add this item" class="open-modalbenefitedit btn btn-warning" href="#modalbenefitedit">Edit</a>
+
+
                         </td>
                     </tr>
                 }
@@ -637,40 +445,53 @@
         </tbody>
     </table>
 </div>
+<script>
+    $(document).on("click", ".open-modalbenefitedit", function () {
+        var benefit = $(this).data('benefit');
+        $(".modal-body #benefit").val(benefit);
+        var roomname = $(this).data('roomname');
+        $(".modal-body #roomname").val(roomname);
+        var roomfloor = $(this).data('roomfloor');
+        $(".modal-body #roomfloor").val(roomfloor);
+        var kostid = $(this).data('kostid');
+        $(".modal-body #kostid").val(kostid);
+        var bank = $(this).data('bank');
+        $(".modal-body #bank").val(bank);
+        var price = $(this).data('price');
+        $(".modal-body #price").val(price);
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+    });
+</script>
 <div class="modal fade" id="modalbenefitedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
+            <form action="/HomeOwner/editbenefit" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add Benefit</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
                     <div class="container">
                         <div class="row">
                             <div class="col">
                                 <div class="row">
-                                    <div class="col-sm-4">
-                                        Nama Kosan
-                                    </div>
-                                    <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
-                                            <option value="id_kosan">Kosan Gandi</option>
-                                        </select>
 
-                                    </div>
                                 </div>
                                 <br />
                                 <div class="row">
                                     <div class="col-sm-4">
+                                        <input type="hidden" id="benefit" name="benefit_id" />
+                                        <input type="hidden" id="kostid" name="kost_id" />
                                         Penjaga Kosan
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
+                                        <select class="form-control" name="penjaga">
+                                            <option selected>Choose</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
 
@@ -681,48 +502,27 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        Penjaga Kosan
+                                        free biaya admin
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
+                                        <select class="form-control" name="admin">
+                                            <option selected>Choose</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
 
                                         </select>
                                     </div>
+
                                 </div>
-
-
                             </div>
-
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="Modaldeletebenefit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Kosan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Yakin ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -842,8 +642,8 @@
                         <td>
 
                         <td>
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalspekedit" data-whatever="">Edit</button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modalspekdelete" data-whatever="">Delete</button>
+                            <a data-bs-toggle="modal" data-spekid="@item.spek_id" data-kostid="@item.spek_kost_id" title="Add this item" class="open-modalspekid btn btn-warning" href="#modalspekid">Edit</a>
+
                         </td>
                     </tr>
                 }
@@ -851,40 +651,54 @@
         </tbody>
     </table>
 </div>
-<div class="modal fade" id="modalspekedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<script>
+    $(document).on("click", ".open-modalspekid", function () {
+        var spekid = $(this).data('spekid');
+        $(".modal-body #spekid").val(spekid);
+        var roomname = $(this).data('roomname');
+        $(".modal-body #roomname").val(roomname);
+        var roomfloor = $(this).data('roomfloor');
+        $(".modal-body #roomfloor").val(roomfloor);
+        var kostid = $(this).data('kostid');
+        $(".modal-body #kostid").val(kostid);
+        var bank = $(this).data('bank');
+        $(".modal-body #bank").val(bank);
+        var price = $(this).data('price');
+        $(".modal-body #price").val(price);
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+    });
+</script>
+<div class="modal fade" id="modalspekid" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Specifications</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
+            <form action="/HomeOwner/editSpek" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Specifications</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
                     <div class="container">
                         <div class="row">
                             <div class="col">
                                 <div class="row">
-                                    <div class="col-sm-4">
-                                        Nama Kosan
-                                    </div>
-                                    <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
-                                            <option value="id_kosan">Kosan Gandi</option>
-                                        </select>
 
-                                    </div>
+
                                 </div>
                                 <br />
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        Ukuran Kamar
+                                        <input type="hidden" id="spekid" name="spek_id" />
+                                        <input type="hidden" id="kostid" name="kost_id" />
+                                        Room Size
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
+                                        <select class="form-select" name="size">
+                                            <option selected>Choose</option>
                                             <option value="3x4">3x4</option>
                                             <option value="4x4">4x4</option>
 
@@ -895,13 +709,13 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        Kamar Mandi diDalam
+                                        Bathroom
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
+                                        <select class="form-select" name="bathroom">
+                                            <option selected>Choose</option>
+                                            <option value="In the room">In the room</option>
+                                            <option value="Out the Room"> Out the Room</option>
 
                                         </select>
                                     </div>
@@ -912,32 +726,15 @@
 
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
-    </div>
-</div>
-<div class="modal fade" id="Modalspekdelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Spesifikasi</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Yakin ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-            </div>
-        </div>
+
     </div>
 </div>
 <!-- Button trigger modal Fasilitas-->
@@ -978,7 +775,7 @@
                                         </div>
                                         <div class="col-sm">
                                             <select class="form-select" name="bed">
-                                                <option selected>Pilih</option>
+                                                <option selected>Choose</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
 
@@ -993,7 +790,7 @@
                                         </div>
                                         <div class="col-sm">
                                             <select class="form-select" name="cup">
-                                                <option selected>Pilih</option>
+                                                <option selected>Choose</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
 
@@ -1008,7 +805,7 @@
                                         </div>
                                         <div class="col-sm">
                                             <select class="form-select" name="wash">
-                                                <option selected>Pilih</option>
+                                                <option selected>Choose</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
 
@@ -1023,7 +820,7 @@
                                         </div>
                                         <div class="col-sm">
                                             <select class="form-select" name="table">
-                                                <option selected>Pilih</option>
+                                                <option selected>Choose</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
 
@@ -1039,7 +836,7 @@
                                         </div>
                                         <div class="col-sm">
                                             <select class="form-select" name="kulkas">
-                                                <option selected>Pilih</option>
+                                                <option selected>Choose</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
 
@@ -1053,7 +850,7 @@
                                         </div>
                                         <div class="col-sm">
                                             <select class="form-select" name="Wifi">
-                                                <option selected>Pilih</option>
+                                                <option selected>Choose</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
 
@@ -1067,7 +864,7 @@
                                         </div>
                                         <div class="col-sm">
                                             <select class="form-select" name="Chair">
-                                                <option selected>Pilih</option>
+                                                <option selected>Choose</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
 
@@ -1081,7 +878,7 @@
                                         </div>
                                         <div class="col-sm">
                                             <select class="form-select" name="TV">
-                                                <option selected>Pilih</option>
+                                                <option selected>Choose</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
 
@@ -1095,7 +892,7 @@
                                         </div>
                                         <div class="col-sm">
                                             <select class="form-select" name="AC">
-                                                <option selected>Pilih</option>
+                                                <option selected>Choose</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
 
@@ -1176,8 +973,9 @@
                         </td>
 
                         <td>
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#Modalfasilitasedit" data-whatever="">Edit</button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#Modalfasilitasdelete" data-whatever="">Delete</button>
+                            <a data-bs-toggle="modal" data-facid="@item.fac_id" data-kostid="@item.fac_kost_id" title="Add this item" class="open-Modalfasilitasedit btn btn-warning" href="#Modalfasilitasedit">Edit</a>
+                            
+
                         </td>
                     </tr>
                 }
@@ -1185,40 +983,52 @@
         </tbody>
     </table>
 </div>
+<script>
+    $(document).on("click", ".open-Modalfasilitasedit", function () {
+        var facid = $(this).data('facid');
+        $(".modal-body #facid").val(facid);
+        var roomname = $(this).data('roomname');
+        $(".modal-body #roomname").val(roomname);
+        var roomfloor = $(this).data('roomfloor');
+        $(".modal-body #roomfloor").val(roomfloor);
+        var kostid = $(this).data('kostid');
+        $(".modal-body #kostid").val(kostid);
+        var bank = $(this).data('bank');
+        $(".modal-body #bank").val(bank);
+        var price = $(this).data('price');
+        $(".modal-body #price").val(price);
+        // As pointed out in comments,
+        // it is unnecessary to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
+    });
+</script>
 <div class="modal fade" id="Modalfasilitasedit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
+            <form action="/HomeOwner/Editfasilitas" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Facilities</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
                     <div class="container">
                         <div class="row">
                             <div class="col">
                                 <div class="row">
-                                    <div class="col-sm-4">
-                                        Nama Kosan
-                                    </div>
-                                    <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
-                                            <option value="id_kosan">Kosan Gandi</option>
-                                        </select>
-
-                                    </div>
+                                    <input type="hidden" id="facid" name="fac_id"/>
+                                    <input type="hidden" id="kostid" name="kost_id"/>
                                 </div>
                                 <br />
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        AC
+                                        Bed
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
+                                        <select class="form-select" name="bed">
+                                            <option selected>Choose</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
 
@@ -1229,11 +1039,11 @@
                                 <br />
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        Kasur
+                                        Cupboard
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
+                                        <select class="form-select" name="cup">
+                                            <option selected>Choose</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
 
@@ -1244,11 +1054,11 @@
                                 <br />
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        Kulkas
+                                        Washing machine
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
+                                        <select class="form-select" name="wash">
+                                            <option selected>Choose</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
 
@@ -1259,11 +1069,11 @@
                                 <br />
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        Kursi
+                                        Table
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
+                                        <select class="form-select" name="table">
+                                            <option selected>Choose</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
 
@@ -1275,39 +1085,11 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        Lemari
+                                        Refrigerator
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        Mesin Cuci
-                                    </div>
-                                    <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        Meja Belajar
-                                    </div>
-                                    <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
+                                        <select class="form-select" name="kulkas">
+                                            <option selected>Choose</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
 
@@ -1320,8 +1102,22 @@
                                         Wifi
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
+                                        <select class="form-select" name="Wifi">
+                                            <option selected>Choose</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        Chair
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="form-select" name="Chair">
+                                            <option selected>Choose</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
 
@@ -1334,8 +1130,22 @@
                                         TV
                                     </div>
                                     <div class="col-sm">
-                                        <select class="custom-select custom-select-lg mb-3">
-                                            <option selected>Pilih</option>
+                                        <select class="form-select" name="TV">
+                                            <option selected>Choose</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        AC
+                                    </div>
+                                    <div class="col-sm">
+                                        <select class="form-select" name="AC">
+                                            <option selected>Choose</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
 
@@ -1343,34 +1153,16 @@
                                     </div>
                                 </div>
                             </div>
-
+                           
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="Modalfasilitasdelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Fasilitas</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Yakin ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Delete</button>
-            </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

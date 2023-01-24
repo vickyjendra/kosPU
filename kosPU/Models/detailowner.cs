@@ -87,5 +87,10 @@ namespace kosPU.Models
         public string kost_notelp { get; set; }
 
         public int empty { get; set; }
+
+        public int totalroom { get; set; }
+
+        public int totalboked { get; set; }
+        public int totalempty { get; set; }
     }
 }
