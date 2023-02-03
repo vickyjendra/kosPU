@@ -1,7 +1,9 @@
-﻿
+﻿@model kosPU.Models.adminm
 @{
     Layout = null;
 }
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,11 +13,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" type="image/png" href="~/additional-file/images/Logo-ISH-Hitam.png" />
+    <link rel="icon" type="image/png" href="~/images/mattel.png" />
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Kosan PU - Login</title>
+    <title>Admin - Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="~/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -40,39 +42,38 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-
-
                             <img src="~/additional-file/images/Logo-ISH-Hitam.png" width="430" height="390" />
-
 
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Wellcome!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Login Admin</h1>
                                     </div>
 
 
+                                    @using (Html.BeginForm("LoginAdmin", "Account", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="form-group">
 
-                                    <div class="form-group">
+
+                                            <input type="text" class="form-control form-control-user"
+                                                   id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" @Html.TextBoxFor(m => m.usr_admin)
+                                            <br />
+                                            <div class="form-group">
+                                                <input type="password" class="form-control form-control-user"
+                                                       id="exampleInputPassword" placeholder="Password" @Html.PasswordFor(m => m.pass_admin)
+                                            </div>
 
 
-                                        <a href="~/Account/LoginOwner">
-                                            <input type="submit" value="Login Owner" class="btn btn-primary btn-user btn-block">
+                                            <input type="submit" value="LOGIN" class="btn btn-primary btn-user btn-block">
 
-                                        </a>
-                                        <br />
-                                        <a href="~/Account/Login">
-                                            <input type="submit" value="Login Seeker" class="btn btn-danger btn-user btn-block">
 
-                                        </a>
-                                        <br />
-                                        <a href="~/Account/Loginadmin">
-                                            <input type="submit" value="Login admin" class="btn btn-success btn-user btn-block">
-
-                                        </a>
-                                        <br />
-
-                                    </div>
+                                            <div class="text-center">
+                                               
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -97,5 +98,4 @@
 </body>
 
 </html>
-
 

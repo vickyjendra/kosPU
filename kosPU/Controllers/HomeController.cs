@@ -32,7 +32,7 @@ namespace kosPU.Controllers
             List<kosan> koss = new List<kosan>();
             string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
             SqlConnection sqlconn = new SqlConnection(mainconn);
-            string query = "select distinct kost_price, kost_name, kosanid.kost_id, kost_lat, kost_long, kost_photo from kosanid join roomid on kosanid.kost_id = kost_id_room  where room_status = 'nothing'";
+            string query = "select FORMAT( kost_price, 'N') AS RP, kost_price, kost_name, kost_status, kosanid.kost_id, kost_lat, kost_long, kost_photo from kosanid join roomid on kosanid.kost_id = kost_id_room  where room_status = 'nothing' and kost_status = 'A'";
 
             SqlCommand sqlcomm = new SqlCommand(query, sqlconn);
             SqlDataAdapter sda = new SqlDataAdapter(sqlcomm);
@@ -44,11 +44,12 @@ namespace kosPU.Controllers
                 kos.kost_name = dr["kost_name"].ToString();
                 kos.kost_price = (int)dr["kost_price"];
                 kos.kost_id = (int)dr["kost_id"];
-               
+                kos.kost_status = dr["kost_status"].ToString();
                 //kos.kost_location = dr["kost_location"].ToString();
                 kos.kost_lat = dr["kost_lat"].ToString();
                 kos.kost_long = dr["kost_long"].ToString();
                 kos.kost_photo = dr["kost_photo"].ToString();
+                kos.RP = dr["RP"].ToString();
                 koss.Add(kos);
             }
 
@@ -212,9 +213,29 @@ namespace kosPU.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
+            string username = Session["us_usrname"].ToString();
             List<detailowner> detail = new List<detailowner>();
             string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
             SqlConnection sqlconn = new SqlConnection(mainconn);
+
+            string queryuser = "select * from account_user where username_user = @username_user";
+            using (SqlCommand cmd = new SqlCommand(queryuser, sqlconn))
+            {
+                cmd.Parameters.AddWithValue("@username_user", username);
+                SqlDataAdapter sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    detailowner detailo = new detailowner();
+                    detailo.username_user = dr["username_user"].ToString();
+                    detailo.email_user = dr["email_user"].ToString();
+                    detailo.name_user = dr["name_user"].ToString();
+                    detailo.phone_userr = dr["phone_userr"].ToString();
+
+                    detail.Add(detailo);
+                }
+            }
 
             string querykos = "select * from kosanid where kost_id = @kost_id";
             using (SqlCommand cmd = new SqlCommand(querykos, sqlconn))
@@ -378,7 +399,7 @@ namespace kosPU.Controllers
             string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
             SqlConnection sqlconn = new SqlConnection(mainconn);
 
-            string querykos = "select * from booking where booking_id = @booking_id";
+            string querykos = "select *, FORMAT( total_book, 'N') AS totalbook  from booking where booking_id = @booking_id";
             using (SqlCommand cmd = new SqlCommand(querykos, sqlconn))
             {
                 cmd.Parameters.AddWithValue("@booking_id", booking_id);
@@ -402,6 +423,7 @@ namespace kosPU.Controllers
                     detailo.booking_usr = dr["booking_usr"].ToString();
                     detailo.total_book = (int)dr["total_book"];
                     detailo.method_pay = dr["method_pay"].ToString();
+                    detailo.totalbook = dr["totalbook"].ToString();
                     
                     detail.Add(detailo);
                 }

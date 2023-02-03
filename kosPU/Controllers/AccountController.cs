@@ -15,8 +15,10 @@ namespace kosPU.Controllers
     {
         KosanEntities entity = new KosanEntities();
         KosanEntities1 Entities1 = new KosanEntities1();
+        KosanEntities6 admin = new KosanEntities6();
         // GET: Account
-        public ActionResult Login()
+
+        public ActionResult LoginAdmin()
         {
             if (Session["us_usrname"] != null)
             {
@@ -30,12 +32,50 @@ namespace kosPU.Controllers
 
         }
         [HttpPost]
+        public ActionResult LoginAdmin(adminm credentails)
+        {
+            string encrypt1 = encrypt.MD5Hash(credentails.usr_admin);
+            bool userExist = admin.admin_ish.Any(x => x.usr_admin == credentails.usr_admin && x.pass_admin == encrypt1);
+            admin_ish u = admin.admin_ish.FirstOrDefault(x => x.usr_admin == credentails.usr_admin && x.pass_admin == encrypt1);
+
+            if (userExist)
+            {
+                Session["us_usrname"] = u.usr_admin.ToString();
+               
+                FormsAuthentication.SetAuthCookie(u.usr_admin, false);
+
+                return RedirectToAction("Index", "admin");
+            }
+            ModelState.AddModelError("", "udah ada");
+            if (Session["us_usrname"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            return View();
+
+        }
+        public ActionResult Login()
+        {
+            if (Session["us_usrname"] != null)
+            {
+                Session["us_usrname"].ToString();
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
+
+        }
+        
+
+        [HttpPost]
         public ActionResult Login(LoginViewModel credentails)
         {
             string encrypt1 = encrypt.MD5Hash(credentails.password_user);
-            bool userExist = Entities1.account_user.Any(x => x.username_user == credentails.username_user && x.password_user == encrypt1);
+            bool userExist = Entities1.account_user.Any(x => x.username_user == credentails.username_user  && x.password_user == encrypt1);
             account_user u = Entities1.account_user.FirstOrDefault(x => x.username_user == credentails.username_user && x.password_user == encrypt1);
-
+            
             if (userExist)
             {
                 Session["us_usrname"] = u.username_user.ToString();

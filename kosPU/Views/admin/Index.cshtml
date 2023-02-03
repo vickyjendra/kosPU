@@ -1,8 +1,10 @@
 ﻿@model IEnumerable<kosPU.Models.kosan>
 @{
-    ViewBag.Title = "dashboardowner";
-    Layout = "~/Views/Shared/View1owner.cshtml";
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/View1 - admin.cshtml";
 }
+
+
 
 <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.js"></script>
@@ -28,14 +30,7 @@
 <div class="card p-2">
 
     <!-- Button trigger modal -->
-    <div class="card-header pb-0 p-3">
-        <div class="row">
-            <div class="col-6 d-flex align-items-center">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter"><i class="fas fa-plus"></i> Add Boarding Room </button>
-            </div>
-
-        </div>
-    </div>
+    
 
 
     @*<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
@@ -47,12 +42,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <form action="/HomeOwner/inputkosan" method="post" enctype="multipart/form-data">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Add Boarding Room</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                   
                     <div class="modal-body">
                         <div class="container">
 
@@ -190,11 +180,11 @@
                 <th>Boarding Room Photo</th>
                 <th>Boarding Room Name</th>
                 <th>Special boarding house</th>
-                
+
                 <th>Price</th>
                 <th>Status</th>
                 <th>Action</th>
-                <th>Detail</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -213,7 +203,6 @@
                     <td>
                         <center>
                             @Html.DisplayFor(modelItem => item.kost_khusus)
-                           
                         </center>
                     </td>
 
@@ -223,40 +212,51 @@
                         </center>
                     </td>
                     <td>
-                        <center>
+                        @if (item.kost_status == "B")
+                        {
 
-                            @if (item.kost_status == "A")
-                            {
-                                <button type="button" class="btn btn-primary">
-                                    Approved
-                                </button>
-                            }
-                            @if (item.kost_status == "B")
-                            {
-                                <button type="button" class="btn btn-warning">
-                                    Waiting
-                                </button>
-                            }
-                            @if (item.kost_status == "C")
-                            {
-                                <button type="button" class="btn btn-danger">
-                                    Rejected
-                                </button>
-                            }
-                        </center>
+
+
+                            <button type="button" class="btn btn-warning">
+                                Waiting
+                            </button>
+
+                        }
+                        @if (item.kost_status == "A")
+                        {
+                            <button type="button" class="btn btn-primary">
+                                Approved
+                            </button>
+                        }
+                        @if (item.kost_status == "C")
+                        {
+                            <button type="button" class="btn btn-danger">
+                                Reject
+                            </button>
+                        }
                     </td>
                     <td>
-                        <a data-bs-toggle="modal" data-kostid="@item.kost_id" data-kosanname="@item.kost_name" data-rekeningname="@item.kost_kostname" data-norek="@item.kost_norek" data-bank="@item.kost_bank" data-price="@item.kost_price" title="Add this item" class="open-exampleModaledit btn btn-warning" href="#exampleModaledit">Edit</a>
-                        @*<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModaledit" data-kostid="@item.kost_id" data-kosanname="@item.kost_name" data-rekeningname="@item.kost_kostname" data-norek="@item.kost_norek" data-bank="@item.kost_bank" data-price="@item.kost_price">
-                                Edit
-                            </button>*@
-                        <a data-bs-toggle="modal" data-kostid="@item.kost_id" data-kosanname="@item.kost_name" data-rekeningname="@item.kost_kostname" data-norek="@item.kost_norek" data-bank="@item.kost_bank" data-price="@item.kost_price" title="Add this item" class="open-exampleModaldelete btn btn-danger" href="#exampleModaldelete">Delete</a>
+                        @if (item.kost_status == "B")
+                        {
 
 
+                            <a data-bs-toggle="modal" data-kostid="@item.kost_id" data-kosanname="@item.kost_name" data-rekeningname="@item.kost_kostname" data-norek="@item.kost_norek" data-bank="@item.kost_bank" data-price="@item.kost_price" data-telp="@item.kost_notelp" data-khusus="@item.kost_khusus" data-owner="@item.kost_owner" title="Add this item" class="open-exampleModaledit btn btn-warning" href="#exampleModaledit">Approve</a>
+                            @*<button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModaledit" data-kostid="@item.kost_id" data-kosanname="@item.kost_name" data-rekeningname="@item.kost_kostname" data-norek="@item.kost_norek" data-bank="@item.kost_bank" data-price="@item.kost_price">
+                Edit
+            </button>*@
+                            <a data-bs-toggle="modal" data-kostid="@item.kost_id" data-kosanname="@item.kost_name" data-rekeningname="@item.kost_kostname" data-norek="@item.kost_norek" data-bank="@item.kost_bank" data-price="@item.kost_price" title="Add this item" class="open-exampleModaldelete btn btn-danger" href="#exampleModaldelete">Reject</a>
+                        }
+                        @if (item.kost_status == "A")
+                        {
+                            <a data-bs-toggle="modal" data-kostid="@item.kost_id" data-kosanname="@item.kost_name" data-rekeningname="@item.kost_kostname" data-norek="@item.kost_norek" data-bank="@item.kost_bank" data-price="@item.kost_price" title="Add this item" class="open-exampleModaldelete btn btn-danger" href="#exampleModaldelete">Reject</a>
+                        }
+                        @if (item.kost_status == "C")
+                {
+                    <a data-bs-toggle="modal" data-kostid="@item.kost_id" data-kosanname="@item.kost_name" data-rekeningname="@item.kost_kostname" data-norek="@item.kost_norek" data-bank="@item.kost_bank" data-price="@item.kost_price" data-telp="@item.kost_notelp" data-khusus="@item.kost_khusus" data-owner="@item.kost_owner" title="Add this item" class="open-exampleModaledit btn btn-warning" href="#exampleModaledit">Approve</a>
+                }
+
                     </td>
-                    <td>
-                        <a href="@Url.Action("DetailPenghuni", new { kost_id = item.kost_id})"><center><i class="fas fa-edit text-info text-center"></i></center></a>
-                    </td>
+                    
                 </tr>
             }
         </tbody>
@@ -294,6 +294,12 @@
             $(".modal-body #bank").val(bank);
             var price = $(this).data('price');
             $(".modal-body #price").val(price);
+            var telp = $(this).data('telp');
+            $(".modal-body #telp").val(telp);
+            var khusus = $(this).data('khusus');
+            $(".modal-body #khusus").val(khusus);
+            var owner = $(this).data('owner');
+            $(".modal-body #owner").val(owner);
             // As pointed out in comments,
             // it is unnecessary to have to manually call the modal.
             // $('#addBookDialog').modal('show');
@@ -302,9 +308,9 @@
     <div class="modal fade" id="exampleModaledit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <form action="/HomeOwner/editkosan" method="post" enctype="multipart/form-data">
+                <form action="/admin/approve" method="post" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Boaring Room</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Approve Boaring Room</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -319,7 +325,7 @@
                                             Boarding Room Name
                                         </div>
                                         <div class="col-sm">
-                                            <input type="text" class="form-control" name="kost_id" id="kostid" required />
+                                            <input type="hidden" class="form-control" name="kost_id" id="kostid" required />
                                             <input type="text" class="form-control" name="name" id="kosanname" required />
                                         </div>
                                     </div>
@@ -327,10 +333,10 @@
 
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            Photo
+                                            Owner
                                         </div>
                                         <div class="col-sm">
-                                            <input type="file" class="form-control form-control-user" name="file" required />
+                                            <input type="text" class="form-control form-control-user" name="file" id="owner" required />
 
                                         </div>
                                     </div>
@@ -369,7 +375,7 @@
                                             Special boarding house
                                         </div>
                                         <div class="col-sm">
-                                            <select class="form-control" aria-label="Default select example" name="khusus" required>
+                                            <select class="form-control" aria-label="Default select example" name="khusus" id="khusus" required>
 
                                                 <option value="Male">Male</option>
                                                 <option value="Female">Female</option>
@@ -377,22 +383,13 @@
                                             </select>
                                             <p>
                                                 <label>contact number</label>
-                                                <input type="number" placeholder="Miles" class="form-control" name="contact" required>
+                                                <input type="number" placeholder="Miles" class="form-control" id="telp" name="contact" required>
                                             </p>
-
+                                            
                                         </div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            Price
-                                        </div>
-                                        <div class="col-sm">
-                                            <input type="number" class="form-control" name="price" id="price" required /><br />
-                                            <input type="text" class="form-control" id="Marker11" name="lokasi11" required /><br />
-                                            <input type="text" class="form-control" id="Marker21" name="lokasi21" required />
-                                        </div>
-                                    </div>
+                                    
                                     <br />
 
                                 </div>
@@ -403,22 +400,7 @@
                         </div>
                     </div>
                     <br />
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-
-
-
-
-                                <div id='mapp' style='width: 730px; height: 300px; margin: 0 auto;'>
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                    </div>
+              
 
 
 
@@ -437,9 +419,9 @@
     <div class="modal fade" id="exampleModaldelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="/HomeOwner/deletekosan" method="post" enctype="multipart/form-data">
+                <form action="/admin/reject" method="post" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete Boarding Room</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Reject Boarding Room</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -450,7 +432,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
-                    </form>
+                </form>
             </div>
         </div>
     </div>
@@ -477,7 +459,7 @@
             zoom: 15
         });
 
-        
+
         //Marker
         let marker1 = null
         mapp.on('click', function (e) {
@@ -504,7 +486,7 @@
             zoom: 15
         });
 
-        
+
         //Marker
         let marker = null
         map.on('click', function (e) {
@@ -565,7 +547,7 @@
         zoom: 15
     });
 
-   
+
     new mapboxgl.Popup({ closeOnClick: false })
         .setLngLat([107.1704454149077, -6.28508748351949])
         .setHTML("PU")
@@ -592,6 +574,9 @@ var arrayMarker = [];
 }
 
 </script>
+
+
+
 
 
 

@@ -58,6 +58,7 @@ namespace kosPU.Controllers
                     koss.kost_notelp = dr["kost_notelp"].ToString();
                     koss.kost_bank = dr["kost_bank"].ToString();
                     koss.kost_kostname = dr["kost_kostname"].ToString();
+                    koss.kost_status = dr["kost_status"].ToString();
                     
                     kos.Add(koss);
                 }
@@ -75,7 +76,7 @@ namespace kosPU.Controllers
             List<kosan> kos = new List<kosan>();
             string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
             SqlConnection sqlconn = new SqlConnection(mainconn);
-            string query1 = "select sender, bank, norek, bukti, periode, total_book, pay_status, NOTELP , kosanid.kost_name, NAME, kost_name, START, periode, kost_price, kosanid.kost_id, room_id, room_floor, room_name, room_status, NAME, payment_id, pay_usr from paymentid " +
+            string query1 = "select FORMAT( total_book, 'N') AS totalbook, sender, bank, norek, bukti, periode, total_book, pay_status, NOTELP , kosanid.kost_name, NAME, kost_name, START, periode, kost_price, kosanid.kost_id, room_id, room_floor, room_name, room_status, NAME, payment_id, pay_usr from paymentid " +
                 "join booking on booking.booking_id = paymentid.booking_id " +
                 "join kosanid on kosanid.kost_id = booking.kost_id " +
                 "join roomid on roomid.kost_id_room = kosanid.kost_id where kosanid.kost_owner = @kost_owner and(pay_status = 'waiting')";
@@ -89,6 +90,7 @@ namespace kosPU.Controllers
                 foreach (DataRow dr in dt.Rows)
                 {
                     kosan koss = new kosan();
+                    koss.totalbook = dr["totalbook"].ToString();
                     koss.NOTELP = dr["NOTELP"].ToString();
                     koss.sender = dr["sender"].ToString();
                     koss.bank = dr["bank"].ToString();
@@ -142,7 +144,7 @@ namespace kosPU.Controllers
                 {
                     string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
                     SqlConnection sqlconn = new SqlConnection(mainconn);
-                    string query = "update kosanid set kost_name = @kost_name, kost_khusus= @kost_khusus, kost_price = @kost_price, kost_owner = @kost_owner, kost_long = @kost_long, kost_lat = @kost_lat, kost_photo = @kost_photo, kost_norek = @kost_norek, kost_bank = @kost_bank, kost_kostname = @kost_kostname, kost_notelp = @kost_notelp where kost_id = @kost_id";
+                    string query = "update kosanid set kost_name = @kost_name, kost_khusus= @kost_khusus, kost_price = @kost_price, kost_owner = @kost_owner, kost_long = @kost_long, kost_lat = @kost_lat, kost_photo = @kost_photo, kost_norek = @kost_norek, kost_bank = @kost_bank, kost_kostname = @kost_kostname, kost_notelp = @kost_notelp, kost_status = @kost_status where kost_id = @kost_id";
 
                     SqlCommand sqlcomm = new SqlCommand(query, sqlconn);
                     sqlconn.Open();
@@ -158,6 +160,7 @@ namespace kosPU.Controllers
                     sqlcomm.Parameters.AddWithValue("@kost_bank", Bank);
                     sqlcomm.Parameters.AddWithValue("@kost_kostname", rekname);
                     sqlcomm.Parameters.AddWithValue("@kost_notelp", contact);
+                    sqlcomm.Parameters.AddWithValue("@kost_status", "B");
                     file.SaveAs(filepath);
                     sqlcomm.ExecuteNonQuery();
                     sqlconn.Close();
@@ -266,6 +269,7 @@ namespace kosPU.Controllers
             string norek = form["norek"];
             string rekname = form["rekname"];
             string Bank = form["Bank"];
+            string status = "B";
             string contact = form["contact"];
             string owner = Session["us_usrname"].ToString();     
             var connectionString = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
@@ -280,8 +284,8 @@ namespace kosPU.Controllers
                 {
                     string mainconn = ConfigurationManager.ConnectionStrings["Koneksi"].ConnectionString;
                     SqlConnection sqlconn = new SqlConnection(mainconn);
-                    string query = "insert into kosanid (kost_name, kost_khusus, kost_price, kost_owner, kost_long, kost_lat, kost_photo, kost_norek, kost_bank, kost_kostname, kost_notelp) " +
-                        "values (@kost_name, @kost_khusus, @kost_price, @kost_owner, @kost_long, @kost_lat, @kost_photo, @kost_norek, @kost_bank, @kost_kostname, @kost_notelp)";
+                    string query = "insert into kosanid (kost_name, kost_khusus, kost_price, kost_owner, kost_long, kost_lat, kost_photo, kost_norek, kost_bank, kost_kostname, kost_notelp, kost_status) " +
+                        "values (@kost_name, @kost_khusus, @kost_price, @kost_owner, @kost_long, @kost_lat, @kost_photo, @kost_norek, @kost_bank, @kost_kostname, @kost_notelp, @kost_status)";
 
                     SqlCommand sqlcomm = new SqlCommand(query, sqlconn);
                     sqlconn.Open();
@@ -296,6 +300,7 @@ namespace kosPU.Controllers
                     sqlcomm.Parameters.AddWithValue("@kost_bank", Bank);
                     sqlcomm.Parameters.AddWithValue("@kost_kostname", rekname);
                     sqlcomm.Parameters.AddWithValue("@kost_notelp", contact);
+                    sqlcomm.Parameters.AddWithValue("@kost_status", status);
                     file.SaveAs(filepath);
                     sqlcomm.ExecuteNonQuery();
                     sqlconn.Close();
@@ -822,7 +827,7 @@ namespace kosPU.Controllers
             //    "join booking on booking.booking_id = paymentid.payment_id " +
             //    "join kosanid on kosanid.kost_id = booking.kost_id " +
             //    "join roomid on roomid.kost_id_room = kosanid.kost_id where kosanid.kost_owner = @kost_owner";
-            string query1 = "select sender, bank, norek, bukti, periode, total_book, pay_status, kosanid.kost_name, kost_price," +
+            string query1 = "select sender, bank, norek, bukti, periode, norekname, total_book, pay_status, kosanid.kost_name, kost_price," +
                 " kosanid.kost_id, room_id, room_floor, room_name, room_status, NAME, payment_id, pay_usr from paymentid " +
                 "join booking on booking.booking_id = paymentid.booking_id " +
                 "join kosanid on kosanid.kost_id = booking.kost_id " +
@@ -837,6 +842,7 @@ namespace kosPU.Controllers
                 foreach (DataRow dr in dt.Rows)
                 {
                     kosan koss = new kosan();
+                    koss.norekname = dr["norekname"].ToString();
                     koss.sender = dr["sender"].ToString();
                     koss.bank = dr["bank"].ToString();
                     koss.norek = dr["norek"].ToString();
@@ -898,6 +904,7 @@ namespace kosPU.Controllers
                     koss.room_name = dr["room_name"].ToString();
                     koss.pay_status = dr["pay_status"].ToString();
                     koss.NAME = dr["NAME"].ToString();
+                    koss.NOTELP = dr["NOTELP"].ToString();
                     koss.room_id = (int)dr["room_id"];
                     koss.payment_id = (int)dr["payment_id"];
                     koss.pay_usr = dr["pay_usr"].ToString();

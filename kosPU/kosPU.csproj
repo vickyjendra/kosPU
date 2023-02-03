@@ -128,6 +128,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\adminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeOwnerController.cs" />
     <Compile Include="Global.asax.cs">
@@ -163,11 +164,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>account1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\account3.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>account3.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\account3.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>account3.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\account3.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>account3.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\account_ownerr.cs">
       <DependentUpon>account.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\account_user.cs">
       <DependentUpon>account1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\adminm.cs" />
+    <Compile Include="Models\admin_ish.cs">
+      <DependentUpon>account3.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\detailowner.cs" />
     <Compile Include="Models\encrypt.cs" />
@@ -400,6 +420,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>account1.edmx</DependentUpon>
       <LastGenOutput>account1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\account3.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>account3.edmx</DependentUpon>
+      <LastGenOutput>account3.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\account3.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>account3.edmx</DependentUpon>
+      <LastGenOutput>account3.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -673,6 +703,13 @@
       <DependentUpon>account1.edmx</DependentUpon>
     </Content>
     <Content Include="additional-file\dselect.scss" />
+    <EntityDeploy Include="Models\account3.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>account3.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\account3.edmx.diagram">
+      <DependentUpon>account3.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2559,6 +2596,9 @@
     <Content Include="Views\Home\MyKost.cshtml" />
     <Content Include="Views\HomeOwner\history.cshtml" />
     <Content Include="Views\HomeOwner\booked.cshtml" />
+    <Content Include="Views\Shared\View1 - admin.cshtml" />
+    <Content Include="Views\Account\LoginAdmin.cshtml" />
+    <Content Include="Views\admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

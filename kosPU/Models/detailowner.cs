@@ -92,5 +92,11 @@ namespace kosPU.Models
 
         public int totalboked { get; set; }
         public int totalempty { get; set; }
+        public int user_id { get; set; }
+        public string name_user { get; set; }
+        public string username_user { get; set; }
+        public string email_user { get; set; }
+        public string phone_userr { get; set; }
+        public string totalbook { get; set; }
     }
 }

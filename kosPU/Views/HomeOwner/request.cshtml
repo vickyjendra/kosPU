@@ -37,7 +37,7 @@
                 </th>
                 <th>
                     <center>
-                        Total Booking
+                        Total Amount
                     </center>
                 </th>
                 <th>
@@ -64,7 +64,7 @@
                         </td>
                         <td>
                             <center>
-                                @Html.DisplayFor(modelItem => item.bank)
+                                @Html.DisplayFor(modelItem => item.norekname)
                             </center>
                         </td>
                         <td>
@@ -87,7 +87,7 @@
                         </td>
                         <td>
                             <center>
-                                @Html.DisplayFor(modelItem => item.total_book)
+                               Rp. @Html.DisplayFor(modelItem => item.totalbook)
                                 <input type="hidden" value="@item.payment_id" name="payment_id" />
                             </center>
                         </td>

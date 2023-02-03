@@ -36,10 +36,12 @@ namespace kosPU.Models
         public DateTime? START { get; set; }
          public string NOTELP { get; set; }
         public string kost_photo { get; set; }
-
+        public string kost_status { get; set; }
         public string kost_norek { get; set; }
         public string kost_bank { get; set; }
         public string kost_kostname { get; set; }
         public string kost_notelp { get; set; }
+        public string RP { get; set; }
+        public string totalbook { get; set; }
     }
 }
